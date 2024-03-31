@@ -1,0 +1,57 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+media/**/
+
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Django stuff:
+*.log
+db.sqlite3
+db.sqlite3-journal
+
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+env/
+.env
+
+ignore
+
+sql
+sitedata
+CACHE
+pickthebrain.sqlite3
+
+
+
+cosmix
+complex
+energy
+html-freebie-triple-p-master
+Initio
+moon
+roxy
+spourmo
+templatemo_554_ocean_vibes
+unika-html
+univers
