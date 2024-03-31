@@ -8,5 +8,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     url(r"^terms-of-use/$", flatpage, {"url": "/terms-of-use/"}, name="terms"),
     url(r"^privacy-policy/$", flatpage, {"url": "/privacy-policy/"}, name="privacy-policy"),
-    path("", include("shop.urls")),
+    path("cart/", include("apps.cart.urls")),
+    path("payment/", include("apps.payment.urls")),
+    path("customers/", include("apps.customers.urls")),
+    path("", include("apps.base.urls")),
+    path("", include("apps.shop.urls")),
 ]
