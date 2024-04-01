@@ -1910,7 +1910,7 @@ textarea:focus {
 	top: auto;
 	left: 0;
 	z-index: 99;
-	width: 100%;
+	/* width: 100%; */
 }
 .megamenu-holder .hb-megamenu {
 	width: auto;
