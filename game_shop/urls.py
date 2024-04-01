@@ -16,9 +16,9 @@ urlpatterns = [
     path("cart/", include("apps.cart.urls")),
     path("payment/", include("apps.payment.urls")),
     path("account/", include("apps.accounts.urls")),
+    path("shop/", include("apps.shop.urls")),
     path("", include("apps.base.urls")),
-    path("", include("apps.shop.urls")),
 ]
 
-# if settings.DEBUG:
-#     urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))
+if settings.DEBUG:
+    urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))

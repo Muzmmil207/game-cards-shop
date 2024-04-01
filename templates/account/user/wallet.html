@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<style>
+  .account-balance {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 8px;
+    font-size: 18px;
+  }
+  .account-balance .balance {
+    color: #fed700;
+    font-weight: 600;
+  }
+  .account-balance .balance-text {
+    font-weight: 700;
+  }
+</style>
+<!--Checkout Area Strat-->
+<div class="checkout-area pt-60 pb-30">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6 col-12">
+        <div class="">
+          <div class="account-balance">
+            <span class="balance">
+              ج.س
+              <span>0</span>
+            </span>
+            <span class="balance-text">رصيدك</span>
+          </div>
+          <div class="order-button-payment">
+            <a href="#" id="showlogin">
+              <span>اضافة رصيد</span>
+              <img alt="account_balance_wallet" class="w-5 mr-1" src="{% static 'assets/icons/add.svg' %}" />
+            </a>
+            <div id="checkout-login" class="coupon-content">
+              <div class="coupon-info">
+                <form action="#">
+                  <p class="form-row-first">
+                    <label for="charge-wallet">
+                      ادخل المبلغ
+                      <span class="required">*</span>
+                    </label>
+                    <input type="number" name="v" min="100" required id="charge-wallet" />
+                  </p>
+                  <p class="form-row">
+                    <input value="اضافة" type="submit" />
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="">
+          <div class="order-button-payment">
+            <a href="{% url 'wallet' %}">
+              <span>سجل المعاملات</span>
+              <img alt="account_balance_wallet" class="w-5 mr-1" src="{% static 'assets/icons/list.svg' %}" />
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-12">{% include './parts/your-order.html' %}</div>
+    </div>
+  </div>
+</div>
+<!--Checkout Area End-->
+{% endblock %}

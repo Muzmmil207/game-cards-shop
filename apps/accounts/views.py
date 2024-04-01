@@ -7,7 +7,11 @@ from .forms import UserEditForm
 
 @login_required
 def wishlist(request):
-    return render(request, "accounts/wishlist.html")
+    return render(request, "account/user/wishlist.html")
+
+@login_required
+def wallet(request):
+    return render(request, "account/user/wallet.html")
 
 
 @login_required
@@ -20,7 +24,7 @@ def edit_account(request):
             form.save()
 
     context = {"form": form}
-    return render(request, "accounts/edit-account.html", context)
+    return render(request, "account/user/edit-account.html", context)
 
 
 @login_required
