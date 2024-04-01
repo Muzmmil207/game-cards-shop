@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Authenticate Via Google{% endblock%} {% block content %}
+<script>
+  location.href = "/login";
+</script>
+<div class="page-section mb-60">
+  <div class="container">
+    <div class="rounded-t mb-0 px-6 py-6">
+      <div class="">
+        <h6 class="">Sign In Via {{ provider.name }}</h6>
+      </div>
+
+      <hr class="" />
+    </div>
+    <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
+      <p class="text-blueGray-400 mb-3">You are about to sign in using a third party account from {{ provider.name }}.</p>
+      <form method="post">
+        {% csrf_token %}
+        <div class="text-center mt-6">
+          <button class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150" type="submit">Continue</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

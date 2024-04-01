@@ -1,0 +1,93 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Register{% endblock%} {% block content %}
+
+<style>
+  .page-section {
+    margin: 40px 0 50px 0;
+    height: 50vh;
+  }
+  .social-providers {
+    background-color: #ffffff;
+    padding: 30px;
+    -webkit-box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 5px 4px 0px rgba(0, 0, 0, 0.1);
+  }
+  .providers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  .provider {
+    margin: 4px 8px;
+    width: 150px;
+  }
+  .provider button {
+    border: 1px solid #fed700;
+    background: white;
+    padding: 3px 5px;
+    max-width: 300px;
+    width: 100%;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    font-weight: 500;
+    font-size: 18px;
+    transition: all ease 0.3s;
+    cursor: pointer;
+  }
+  .provider button:hover {
+    background: #fed700;
+    scale: 1.01;
+    color: black;
+  }
+</style>
+<!-- Begin Li's Breadcrumb Area -->
+<div class="breadcrumb-area">
+  <div class="container">
+    <div class="breadcrumb-content">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Login Register</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- Li's Breadcrumb Area End Here -->
+<!-- Begin Login Content Area -->
+<div class="page-section mb-60">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 mb-30">
+        <div class="social-providers">
+          <div class="text-center mb-3">
+            <h6 class="text-blueGray-500 text-sm font-bold">Sign in with</h6>
+          </div>
+          <div class="providers">
+            <div class="provider">
+              <form action="/google/login/" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="process" value="login" />
+                <button type="submit">
+                  <img alt="..." class="w-5 mr-1" src="{% static 'assets/img/google.svg' %}" />
+                  Google
+                </button>
+              </form>
+            </div>
+            <div class="provider">
+              <form action="/google/login/" method="get">
+                <input type="hidden" name="process" value="login" />
+                <button type="submit">
+                  <img alt="..." class="w-5 mr-1" src="{% static 'assets/img/google.svg' %}" />
+                  Google
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Login Content Area End Here -->
+{% endblock %}

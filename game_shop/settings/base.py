@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,7 +37,13 @@ LOCAL_APPS = [
     "apps.payment",
     "apps.orders",
 ]
-THIRD_PARTY_APPS = []
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
+]
 INSTALLED_APPS = DJANGO_COMMON_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 SITE_ID = 1
@@ -84,6 +90,27 @@ DATABASES = {
     }
 }
 
+LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/login/"
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# ACCOUNT_USERNAME_REQUIRED =False
+ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
+ACCOUNT_LOGOUT_REDIRECT_URL = LOGIN_URL
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": "801117901520-7s8o0ufsjvs92ugpqj1ob638gmpqva7t.apps.googleusercontent.com",
+            "secret": "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",
+            "key": "",
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
