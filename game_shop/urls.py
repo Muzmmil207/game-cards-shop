@@ -15,7 +15,7 @@ urlpatterns = [
     #
     path("cart/", include("apps.cart.urls")),
     path("payment/", include("apps.payment.urls")),
-    path("customers/", include("apps.customers.urls")),
+    path("account/", include("apps.accounts.urls")),
     path("", include("apps.base.urls")),
     path("", include("apps.shop.urls")),
 ]
