@@ -35,7 +35,8 @@
             </a>
             <div id="checkout-login" class="coupon-content">
               <div class="coupon-info">
-                <form action="#">
+                <form action="{% url 'account-charge-checkout' %}" method="post">
+                  {% csrf_token %}
                   <p class="form-row-first">
                     <label for="charge-wallet">
                       ادخل المبلغ

@@ -13,6 +13,10 @@ def wishlist(request):
 def wallet(request):
     return render(request, "account/user/wallet.html")
 
+@login_required
+def account_charge_checkout(request):
+    return render(request, "account/user/account-charge-checkout.html")
+
 
 @login_required
 def edit_account(request):

@@ -1,0 +1,230 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<!-- Begin Li's Breadcrumb Area -->
+<div class="breadcrumb-area">
+  <div class="container">
+    <div class="breadcrumb-content">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li class="active">Checkout</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- Li's Breadcrumb Area End Here -->
+<!--Checkout Area Strat-->
+<div class="checkout-area pt-60 pb-30">
+  <div class="container">
+    {% comment %}
+    <div class="row">
+      <div class="col-12">
+        <div class="coupon-accordion">
+          <!--Accordion Start-->
+          <h3>
+            Returning customer?
+            <span id="showlogin">Click here to login</span>
+          </h3>
+          <div id="checkout-login" class="coupon-content">
+            <div class="coupon-info">
+              <p class="coupon-text">Quisque gravida turpis sit amet nulla posuere lacinia. Cras sed est sit amet ipsum luctus.</p>
+              <form action="#">
+                <p class="form-row-first">
+                  <label>
+                    Username or email
+                    <span class="required">*</span>
+                  </label>
+                  <input type="text" />
+                </p>
+                <p class="form-row-last">
+                  <label>
+                    Password
+                    <span class="required">*</span>
+                  </label>
+                  <input type="text" />
+                </p>
+                <p class="form-row">
+                  <input value="Login" type="submit" />
+                  <label>
+                    <input type="checkbox" />
+                    Remember me
+                  </label>
+                </p>
+                <p class="lost-password"><a href="#">Lost your password?</a></p>
+              </form>
+            </div>
+          </div>
+          <!--Accordion End-->
+          <!--Accordion Start-->
+          <h3>
+            Have a coupon?
+            <span id="showcoupon">Click here to enter your code</span>
+          </h3>
+          <div id="checkout_coupon" class="coupon-checkout-content">
+            <div class="coupon-info">
+              <form action="#">
+                <p class="checkout-coupon">
+                  <input placeholder="Coupon code" type="text" />
+                  <input value="Apply Coupon" type="submit" />
+                </p>
+              </form>
+            </div>
+          </div>
+          <!--Accordion End-->
+        </div>
+      </div>
+    </div>
+    {% endcomment %}
+    <div class="row">
+      <div class="col-lg-6 col-12">
+        <form action="#">
+          <div class="checkbox-form">
+            <h3>تفاصيل الفاتورة</h3>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="checkout-form-list">
+                  <label>
+                    الاسم الاخير
+                    <span class="required">*</span>
+                  </label>
+                  <input placeholder="" type="text" />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="checkout-form-list">
+                  <label>
+                    الاسم الأول
+                    <span class="required">*</span>
+                  </label>
+                  <input placeholder="" type="text" />
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="checkout-form-list">
+                  <label>
+                    البريد الإلكتروني
+                    <span class="required">*</span>
+                  </label>
+                  <input placeholder="Street address" type="text" />
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="checkout-form-list">
+                  <label>
+                    الهاتف
+                    <span class="required">*</span>
+                  </label>
+                  <input placeholder="Street address" type="text" />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="checkout-form-list">
+                  <label>
+                    رقم العملية
+                    <span class="required">*</span>
+                  </label>
+                  <input placeholder="موجود في الاشعار رقم العملية زي  2000722095" type="text" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-lg-6 col-12">
+        <div class="your-order">
+          <h3>طلبك</h3>
+          <div class="your-order-table table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="cart-product-name">المنتج</th>
+                  <th class="cart-product-total">المجموع</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="cart_item">
+                  <td class="cart-product-name">
+                    بطاقة بببجي
+                    <strong class="product-quantity">× 1</strong>
+                  </td>
+                  <td class="cart-product-total"><span class="amount">£165.00</span></td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="cart-subtotal">
+                  <th>المجموع</th>
+                  <td><span class="amount">£215.00</span></td>
+                </tr>
+                <tr class="order-total">
+                  <th>الاجمالي</th>
+                  <td>
+                    <strong><span class="amount">£215.00</span></strong>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div class="payment-method">
+            <div class="payment-accordion">
+              <div id="accordion" style="text-align: right">
+                <div class="card">
+                  <div class="card-header" id="#payment-1">
+                    <h5 class="panel-title">
+                      <a class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">تعليمات التحويل</a>
+                    </h5>
+                  </div>
+                  <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                    <div class="card-body">
+                      <style>
+                        #collapseOne .card-body li {
+                          list-style: disc;
+                          direction: rtl;
+                          list-style-position: inside;
+                        }
+                      </style>
+                      <p>
+                        <ul>
+                        <li>اكتب رقم العملية في المربع التحت (حتلقا في اشعار التحويل نفسو)</li>
+                        <li>لو اشعارك حق يوم تاني ما ترفعو رسلة لي الدعم الفني</li>
+                        <li>ما تكرر الطلب اكتر من مره لو عند مشكلة ادخل صفحة اتصل بنا</li>
+                        </ul>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="#payment-2">
+                    <h5 class="panel-title">
+                      <a class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">بيانات الدفع</a>
+                    </h5>
+                  </div>
+                  <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                      <p>رقم الحساب : 3000213</p>
+                      <p>باسم : شركة اليونكو للانشطة المتعددة المحدودة</p>
+                      <p>الفرع : اللفة</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="order-button-payment">
+                <div class="col-md-12" style="direction: rtl">
+                  <div class="checkout-form-list" style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 0">
+                    <input id="cbox" type="checkbox" />
+                    <label>لقد قرأتُ <a href="" style="background: transparent;border: medium none;color: black;font-size: 16px;font-weight: 500;height: 50px;margin: 20px 0 0;padding: 0;text-transform: uppercase;-webkit-transition: all 0.3s ease 0s;transition: all 0.3s ease 0s;width: 0;border: none;cursor: pointer;display: inline;">الشروط والأحكام</a> وأوافق عليها لهذا الموقع</label>
+                  </div>
+                </div>
+                <input value="اكمال الطلب" type="submit" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Checkout Area End-->
+
+{% endblock %}

@@ -12,6 +12,7 @@ def about_us(request):
 
     return render(request, "about-us.html")
 
+
 def faq(request):
 
     return render(request, "faq.html")
