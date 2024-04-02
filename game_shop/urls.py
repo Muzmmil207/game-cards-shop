@@ -20,5 +20,5 @@ urlpatterns = [
     path("", include("apps.base.urls")),
 ]
 
-if settings.DEBUG:
-    urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))
+# if settings.DEBUG:
+#     urlpatterns.append(path("__reload__/", include("django_browser_reload.urls")))
