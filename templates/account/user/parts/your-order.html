@@ -5,40 +5,65 @@
     <div class="payment-accordion">
       <div id="accordion">
         <div class="card">
-          <div class="order-button-payment">
-            <a href="{% url 'wallet' %}">
-              <span>ج.س 0</span>
-              <img alt="account_balance_wallet" class="w-5 mr-1" src="{% static 'assets/icons/account_balance_wallet.svg' %}" />
+          <div
+            class="order-button-payment">
+            <a
+              href="{% url 'wallet' %}">
+              <span>
+                ج.س
+                {{request.user.wallet.balance}}
+              </span>
+              <img
+                alt="account_balance_wallet"
+                class="w-5 mr-1"
+                src="{% static 'assets/icons/account_balance_wallet.svg' %}" />
             </a>
           </div>
         </div>
         <div class="card">
-          <div class="order-button-payment">
-            <a href="{% url 'account-orders' %}">
+          <div
+            class="order-button-payment">
+            <a
+              href="{% url 'account-orders' %}">
               <span>طلباتي</span>
-              <img alt="account_balance_wallet" class="w-5 mr-1" src="{% static 'assets/icons/receipt.svg' %}" />
+              <img
+                alt="account_balance_wallet"
+                class="w-5 mr-1"
+                src="{% static 'assets/icons/receipt.svg' %}" />
             </a>
           </div>
         </div>
         <div class="card">
-          <div class="order-button-payment">
-            <a href="{% url 'edit-account' %}">
+          <div
+            class="order-button-payment">
+            <a
+              href="{% url 'edit-account' %}">
               <span>تفاصيل حسابي</span>
-              <img alt="account_balance_wallet" class="w-5 mr-1" src="{% static 'assets/icons/settings_account.svg' %}" />
+              <img
+                alt="account_balance_wallet"
+                class="w-5 mr-1"
+                src="{% static 'assets/icons/settings_account.svg' %}" />
             </a>
           </div>
         </div>
         <div class="card">
-          <div class="order-button-payment">
+          <div
+            class="order-button-payment">
             <a href="{% url 'shop' %}">
               <span>مواصلة التسوق</span>
-              <img alt="account_balance_wallet" class="w-5 mr-1" src="{% static 'assets/icons/storefront.svg' %}" />
+              <img
+                alt="account_balance_wallet"
+                class="w-5 mr-1"
+                src="{% static 'assets/icons/storefront.svg' %}" />
             </a>
           </div>
         </div>
       </div>
       <div class="order-button-payment">
-        <input value="تسجيل الخروج" type="submit" style="background: red" />
+        <input
+          value="تسجيل الخروج"
+          type="submit"
+          style="background: red" />
       </div>
     </div>
   </div>

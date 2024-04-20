@@ -36,6 +36,7 @@ LOCAL_APPS = [
     "apps.cart",
     "apps.payment",
     "apps.orders",
+    "apps.accounts",
 ]
 THIRD_PARTY_APPS = [
     "rest_framework",
