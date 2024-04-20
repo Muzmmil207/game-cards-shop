@@ -44,6 +44,9 @@
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}" />
     <!-- Modernizr js -->
     <script src="{% static 'js/vendor/modernizr-2.8.3.min.js' %}"></script>
+    <script>
+      const csrftoken = "{{csrf_token}}";
+    </script>
   </head>
 
   <body>
