@@ -29,6 +29,7 @@ DJANGO_COMMON_APPS = [
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "django.contrib.flatpages",
+    "django.contrib.humanize",
 ]
 LOCAL_APPS = [
     "apps.base",
@@ -57,6 +58,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # Custom
+    "apps.shop.middleware.request.RequestMiddleware",
 ]
 
 

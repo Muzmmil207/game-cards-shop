@@ -1,8 +1,11 @@
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
+
+from apps.shop.models import Game
 
 from .forms import UserEditForm
+from .models import Wishlist
 
 
 @login_required
@@ -45,3 +48,22 @@ def delete_user(request):
     user.save()
     logout(request)
     return redirect("delete_confirmation")
+
+
+@login_required
+def manage_wishlist(request, game_id):
+    game = get_object_or_404(Game, pk=game_id)
+    user = request.user
+
+    # Check if game already exists in wishlist (optional)
+    if not Wishlist.objects.filter(user=user, game=game).exists():
+        Wishlist.objects.create(user=user, game=game)
+
+    # Get the referrer URL (previous page)
+    referer = request.META.get("HTTP_REFERER")
+
+    # Check if referrer is valid and return a success message otherwise
+    if not referer:
+        return redirect("game-details", game.slug)  # Redirect to product detail
+
+    return redirect(referer)  # Redirect back to the previous page

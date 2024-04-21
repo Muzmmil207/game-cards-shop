@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.http import Http404, HttpRequest
 from django.shortcuts import get_object_or_404, render
 
-from .models import Category, Game
+from .models import Card, Category, Game
 
 
 def shop(request, category_slug=None):
@@ -58,12 +58,16 @@ def shop(request, category_slug=None):
 
 def game_details(request: HttpRequest, game_slug):
     """Renders a game detail page with related reviews and images."""
+    if request.method == 'POST':
+        print(request.POST)
     try:
         game = Game.objects.filter(slug=game_slug).first()
     except:
         return Http404()
+    cards = Card.objects.filter(game=game).order_by("price")
 
     context = {
         "game": game,
+        "cards": cards,
     }
     return render(request, "shop/game-details.html", context)

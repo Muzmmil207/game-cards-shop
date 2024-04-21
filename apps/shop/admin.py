@@ -7,9 +7,15 @@ admin.site.register(Discount)
 admin.site.register(Card)
 
 
+class CardInline(admin.TabularInline):
+    model = Card
+
+
 @admin.register(Game)
 class GameAdmin(admin.ModelAdmin):
     def save_model(self, request, obj: Game, form, change) -> None:
         if not obj.pk:
             obj.created_by = request.user
         obj.save()
+
+    inlines = [CardInline]

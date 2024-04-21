@@ -1,4 +1,38 @@
-{% extends 'base.html' %} {% load static %} {% load stars_filers %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% load stars_filers %} {% block content %}{% load humanize %}
+<style>
+  .active-card-btn {
+    border-color: #e9c20d !important;
+  }
+  .card-btn {
+    -webkit-tap-highlight-color: transparent;
+    background-color: #fff;
+    border-radius: 5px;
+    border: solid 1px #e8e8e8;
+    box-sizing: border-box;
+    clear: both;
+    cursor: pointer;
+    display: inline-block;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: normal;
+    height: 42px;
+    line-height: 40px;
+    outline: none;
+    padding-left: 18px;
+    padding-right: 18px;
+    position: relative;
+    text-align: left !important;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    width: auto;
+    color: black;
+  }
+</style>
 <!-- Begin Li's Breadcrumb Area -->
 <div class="breadcrumb-area">
   <div class="container">
@@ -33,7 +67,7 @@
         <div class="product-details-view-content pt-60">
           <div class="product-info">
             <h2>{{game.name}}</h2>
-            <span class="product-details-ref">Reference: demo_15</span>
+            <!-- <span class="product-details-ref">Reference: demo_15</span> -->
             <div class="rating-box pt-20">
               <ul class="rating rating-with-review-item">
                 <li><i class="fa fa-star-o"></i></li>
@@ -41,68 +75,67 @@
                 <li><i class="fa fa-star-o"></i></li>
                 <li class="no-star"><i class="fa fa-star-o"></i></li>
                 <li class="no-star"><i class="fa fa-star-o"></i></li>
-                <li class="review-item"><a href="#">Read Review</a></li>
-                <li class="review-item"><a href="#">Write Review</a></li>
+                <li class="review-item"><a href="#reviews">اقرا المراجعات</a></li>
+                <li class="review-item"><a href="#">اكتب مراجعة</a></li>
               </ul>
             </div>
             <div class="price-box pt-20">
-              <span class="new-price new-price-2">$57.98</span>
+              <span class="new-price new-price-2">
+                <span>ج.س</span>
+                <span id="card-price">{{cards.0.price|intcomma}}</span>
+              </span>
             </div>
             <div class="product-desc">
               <p>
-                <span>100% cotton double printed dress. Black and white striped top and orange high waisted skater skirt bottom. Lorem ipsum dolor sit amet, consectetur adipisicing elit. quibusdam corporis, earum facilis et nostrum dolorum accusamus similique eveniet quia pariatur.</span>
+                <span>{{game.note|default:''}}</span>
               </p>
             </div>
             <div class="product-variants">
               <div class="produt-variants-size">
-                <label>Dimension</label>
-                <select class="nice-select">
-                  <option value="1" title="S" selected="selected">40x60cm</option>
-                  <option value="2" title="M">60x90cm</option>
-                  <option value="3" title="L">80x120cm</option>
-                </select>
+                <label>البطاقات</label>
+
+                {% for card in cards %}
+                <button class="card-btn" data-id="{{card.id}}" data-price="{{card.price|intcomma}}">
+                  {{card.name}}
+                </button>
+                {% endfor %}
               </div>
             </div>
             <div class="single-add-to-cart">
-              <form action="#" class="cart-quantity">
+              <form class="cart-quantity" id="cart-form" method="post">
+                {% csrf_token %}
                 <div class="quantity">
-                  <label>Quantity</label>
+                  <label>الكمية</label>
                   <div class="cart-plus-minus">
-                    <input class="cart-plus-minus-box" value="1" type="text" />
-                    <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                    <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                    <input class="cart-plus-minus-box" name="quantity" value="1" type="text" />
                   </div>
                 </div>
-                <button class="add-to-cart" id="add-button" type="submit">Add to cart</button>
+                <input type="hidden" name="game_id" value="{{game.id}}" />
+                <input type="hidden" name="card_id" id="card-input" value="{{cards.0.id}}" />
+                <button class="add-to-cart" id="add-button" type="submit">إضافة إلى السلة</button>
               </form>
             </div>
             <div class="product-additional-info pt-25">
-              <a class="wishlist-btn" href="wishlist.html">
+              <a class="wishlist-btn" href="{% url 'manage-wishlist' game.id %}">
                 <i class="fa fa-heart-o"></i>
-                Add to wishlist
+                إضافة الي قائمة الامنيات
               </a>
               <div class="product-social-sharing pt-25">
                 <ul>
                   <li class="facebook">
-                    <a href="#">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{request.get_full_url}}">
                       <i class="fa fa-facebook"></i>
                       Facebook
                     </a>
                   </li>
                   <li class="twitter">
-                    <a href="#">
+                    <a href="https://twitter.com/intent/tweet?url={{request.get_full_url}}">
                       <i class="fa fa-twitter"></i>
                       Twitter
                     </a>
                   </li>
-                  <li class="google-plus">
-                    <a href="#">
-                      <i class="fa fa-google-plus"></i>
-                      Google +
-                    </a>
-                  </li>
                   <li class="instagram">
-                    <a href="#">
+                    <a href="https://www.instagram.com/share?url={{request.get_full_url}}">
                       <i class="fa fa-instagram"></i>
                       Instagram
                     </a>
@@ -111,7 +144,7 @@
               </div>
             </div>
             <div class="block-reassurance">
-              <ul>
+              <!-- <ul>
                 <li>
                   <div class="reassurance-item">
                     <div class="reassurance-icon">
@@ -136,7 +169,7 @@
                     <p>Return policy (edit with Customer reassurance module)</p>
                   </div>
                 </li>
-              </ul>
+              </ul> -->
             </div>
           </div>
         </div>
@@ -153,13 +186,13 @@
         <div class="li-product-tab">
           <ul class="nav li-product-menu">
             <li>
-              <a class="active" data-toggle="tab" href="#description"><span>Description</span></a>
+              <a class="active" data-toggle="tab" href="#description"><span>الوصف</span></a>
             </li>
             <li>
               <a data-toggle="tab" href="#product-details"><span>Product Details</span></a>
             </li>
             <li>
-              <a data-toggle="tab" href="#reviews"><span>Reviews</span></a>
+              <a data-toggle="tab" href="#reviews"><span>مراجعات</span></a>
             </li>
           </ul>
         </div>
@@ -169,7 +202,7 @@
     <div class="tab-content">
       <div id="description" class="tab-pane active show" role="tabpanel">
         <div class="product-description">
-          <span>The best is yet to come! Give your walls a voice with a framed poster. This aesthethic, optimistic poster will look great in your desk or in an open-space office. Painted wooden frame with passe-partout for more depth.</span>
+          <span>{{game.description}}</span>
         </div>
       </div>
       <div id="product-details" class="tab-pane" role="tabpanel">
@@ -224,7 +257,11 @@
                           <div class="li-review-product-desc">
                             <p class="li-product-name">Today is a good day Framed poster</p>
                             <p>
-                              <span>Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360 R3 Wi-Fi Bluetooth Speakers. Fill The Entire Room With Exquisite Sound via Ring Radiator Technology. Stream And Control R3 Speakers Wirelessly With Your Smartphone. Sophisticated, Modern Design</span>
+                              <span>
+                                Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360 R3 Wi-Fi Bluetooth
+                                Speakers. Fill The Entire Room With Exquisite Sound via Ring Radiator Technology. Stream
+                                And Control R3 Speakers Wirelessly With Your Smartphone. Sophisticated, Modern Design
+                              </span>
                             </p>
                           </div>
                         </div>
@@ -250,7 +287,12 @@
                                 </p>
                                 <p class="feedback-form">
                                   <label for="feedback">Your Review</label>
-                                  <textarea id="feedback" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+                                  <textarea
+                                    id="feedback"
+                                    name="comment"
+                                    cols="45"
+                                    rows="8"
+                                    aria-required="true"></textarea>
                                 </p>
                                 <div class="feedback-input">
                                   <p class="feedback-form-author">
@@ -258,14 +300,26 @@
                                       Name
                                       <span class="required">*</span>
                                     </label>
-                                    <input id="author" name="author" value="" size="30" aria-required="true" type="text" />
+                                    <input
+                                      id="author"
+                                      name="author"
+                                      value=""
+                                      size="30"
+                                      aria-required="true"
+                                      type="text" />
                                   </p>
                                   <p class="feedback-form-author feedback-form-email">
                                     <label for="email">
                                       Email
                                       <span class="required">*</span>
                                     </label>
-                                    <input id="email" name="email" value="" size="30" aria-required="true" type="text" />
+                                    <input
+                                      id="email"
+                                      name="email"
+                                      value=""
+                                      size="30"
+                                      aria-required="true"
+                                      type="text" />
                                     <span class="required">
                                       <sub>*</sub>
                                       Required fields
@@ -297,25 +351,43 @@
 <!-- Product Area End Here -->
 
 <script>
-  const addButton = document.getElementById("add-button");
-  if (addButton) {
-    addButton.addEventListener("click", async function (e) {
-      e.preventDefault();
-      let id = "{{game.id}}";
-
-      let response = await fetch('{% url "cart-add" %}', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": csrftoken,
-        },
-        body: JSON.stringify({
-          productid: id,
-          productqty: 1,
-          csrfmiddlewaretoken: "{{csrf_token}}",
-        }),
+  const cardBtns = document.querySelectorAll(".card-btn");
+  cardBtns.forEach((cardBtn) => {
+    cardBtn.addEventListener("click", () => {
+      cardBtns.forEach((cardBtn) => {
+        cardBtn.classList.remove("active-card-btn");
       });
+      cardBtn.classList.toggle("active-card-btn");
+      document.getElementById("card-input").value = cardBtn.dataset.id;
+
+      document.getElementById("card-price").innerText = cardBtn.dataset.price;
     });
-  }
+  });
+
+  // let form = document.getElementById("cart-form");
+  // const addButton = document.getElementById("add-button");
+  // if (addButton) {
+  //   addButton.addEventListener("click", async function (e) {
+  //     e.preventDefault();
+  //     let id = "{{game.id}}";
+
+  //     const formData = new FormData(form);
+  //     console.log(formData.values());
+  //     console.log(formData);
+  //     let response = await fetch('{% url "cart-add" %}', {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "X-CSRFToken": csrftoken,
+  //       },
+  //       body: formData.values(),
+  //       // body: JSON.stringify({
+  //       //   productid: id,
+  //       //   productqty: 1,
+  //       //   csrfmiddlewaretoken: "{{csrf_token}}",
+  //       // }),
+  //     });
+  //   });
+  // }
 </script>
 {% endblock %}

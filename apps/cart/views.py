@@ -17,13 +17,13 @@ def shopping_cart(request: HttpRequest):
 def cart_add(request: HttpRequest):
     data = json.loads(request.body)
     print(data)
-    cart = Cart(request)
-    product_id = data.get("productid")
-    product_qty = int(data.get("productqty"))
-    product = Game.objects.get(id=product_id)
-    cart.add(product=product, qty=product_qty)
+    # cart = Cart(request)
+    # product_id = data.get("productid")
+    # product_qty = int(data.get("productqty"))
+    # product = Game.objects.get(id=product_id)
+    # cart.add(product=product, qty=product_qty)
 
-    response = JsonResponse(f"{product.title} add to the cart", safe=False)
+    response = JsonResponse(f"{'product.title'} add to the cart", safe=False)
     return response
 
 
