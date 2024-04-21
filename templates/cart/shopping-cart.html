@@ -1,11 +1,23 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% load cart_filers %} {% block content %}
+<style>
+  .cart-plus-minus-box {
+    border: 1px solid #e1e1e1;
+    color: #242424;
+    height: 46px;
+    text-align: center;
+    width: 48px;
+    width: 48px;
+    width: 3rem;
+    background: #fff;
+  }
+</style>
 <!-- Begin Li's Breadcrumb Area -->
 <div class="breadcrumb-area">
   <div class="container">
     <div class="breadcrumb-content">
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li class="active">Shopping Cart</li>
+        <li><a href="/">الصفحة ارئيسية</a></li>
+        <li class="active">سلة التسوق</li>
       </ul>
     </div>
   </div>
@@ -21,65 +33,53 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th class="li-product-remove">remove</th>
-                  <th class="li-product-thumbnail">images</th>
-                  <th class="cart-product-name">Product</th>
-                  <th class="li-product-price">Unit Price</th>
-                  <th class="li-product-quantity">Quantity</th>
-                  <th class="li-product-subtotal">Total</th>
+                  <th class="li-product-remove">إزالة</th>
+                  <th class="li-product-thumbnail">صورة</th>
+                  <th class="cart-product-name">البطاقة</th>
+                  <th class="li-product-price">سعر البطاقة</th>
+                  <th class="li-product-quantity">الكمية</th>
+                  <th class="li-product-subtotal">المجموع</th>
                 </tr>
               </thead>
               <tbody>
+                {% for card in cart_cards %}
                 <tr>
                   <td class="li-product-remove">
-                    <a href="#"><i class="fa fa-times"></i></a>
+                    <a href="{% url 'cart-delete' card.id %}"><i class="fa fa-times"></i></a>
                   </td>
                   <td class="li-product-thumbnail">
-                    <a href="#"><img src="images/product/small-size/5.jpg" alt="Li's Product Image" /></a>
+                    <a href="{% url 'game-details' card.game.slug %}">
+                      <img src="{{card.game.image_url}}" alt="Li's Product Image" style="height: 150px" />
+                    </a>
                   </td>
-                  <td class="li-product-name"><a href="#">Accusantium dolorem1</a></td>
-                  <td class="li-product-price"><span class="amount">$46.80</span></td>
+                  <td class="li-product-name">
+                    <a href="{% url 'game-details' card.game.slug %}">{{card.game.name}}</a>
+                  </td>
+                  <td class="li-product-price"><span class="amount">{{card.price}}</span></td>
                   <td class="quantity">
                     <label>Quantity</label>
-                    <div class="cart-plus-minus">
-                      <input class="cart-plus-minus-box" value="1" type="text" />
-                      <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                      <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
+                    <div class="cart--plus-minus">
+                      <input
+                        class="cart-plus-minus-box"
+                        value="{{card|get_quantity:cart}}"
+                        data-id="{{card.id}}"
+                        type="number" />
+                      <!-- <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
+                      <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div> -->
                     </div>
                   </td>
-                  <td class="product-subtotal"><span class="amount">$70.00</span></td>
+                  <td class="product-subtotal"><span class="amount">{{card|total_price:cart}}</span></td>
                 </tr>
-                <tr>
-                  <td class="li-product-remove">
-                    <a href="#"><i class="fa fa-times"></i></a>
-                  </td>
-                  <td class="li-product-thumbnail">
-                    <a href="#"><img src="images/product/small-size/6.jpg" alt="Li's Product Image" /></a>
-                  </td>
-                  <td class="li-product-name"><a href="#">Mug Today is a good day</a></td>
-                  <td class="li-product-price"><span class="amount">$71.80</span></td>
-                  <td class="quantity">
-                    <label>Quantity</label>
-                    <div class="cart-plus-minus">
-                      <input class="cart-plus-minus-box" value="1" type="text" />
-                      <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
-                      <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
-                    </div>
-                  </td>
-                  <td class="product-subtotal"><span class="amount">$60.50</span></td>
-                </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
           <div class="row">
             <div class="col-12">
               <div class="coupon-all">
-                <div class="coupon">
-                  <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text" />
-                  <input class="button" name="apply_coupon" value="Apply coupon" type="submit" />
-                </div>
+                <div class="coupon"></div>
                 <div class="coupon2">
-                  <input class="button" name="update_cart" value="Update cart" type="submit" />
+                  <input class="button" name="update_cart" value="تحديث السلة" type="submit" />
                 </div>
               </div>
             </div>
@@ -90,15 +90,15 @@
                 <h2>Cart totals</h2>
                 <ul>
                   <li>
-                    Subtotal
-                    <span>$130.00</span>
+                    الإجمالي
+                    <span>ج.س. {{cart.get_cart_total}}</span>
                   </li>
                   <li>
-                    Total
-                    <span>$130.00</span>
+                    المجموع
+                    <span>ج.س. {{cart.get_cart_total}}</span>
                   </li>
                 </ul>
-                <a href="#">Proceed to checkout</a>
+                <a href="{% url 'checkout' %}">التقدم لإتمام الطلب</a>
               </div>
             </div>
           </div>
@@ -108,4 +108,24 @@
   </div>
 </div>
 <!--Shopping Cart Area End-->
+<script>
+  const cartBoxes = document.querySelectorAll(".cart-plus-minus-box");
+  cartBoxes.forEach((cartBox) => {
+    cartBox.addEventListener("change", (e) => {
+      let value = e.target.value;
+      let card_id = cartBox.dataset.id;
+
+      let response = fetch('{% url "cart-update" %}', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          card_id: card_id,
+          qty_value: value,
+        }),
+      });
+    });
+  });
+</script>
 {% endblock %}

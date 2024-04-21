@@ -34,13 +34,13 @@ class Cart:
         """
         Get the cart data and count the qty of items
         """
-        return sum(item["qty"] for item in self.cart.values())
+        return sum(int(item["qty"]) for item in self.cart.values())
 
     def save(self):
         self.session.modified = True
 
     def get_cart_total(self):
-        return sum(item["price"] * item["qty"] for item in self.cart.values())
+        return sum(int(item["price"]) * int(item["qty"]) for item in self.cart.values())
 
     def add(self, card: Card, qty, card_game):
         """
@@ -50,7 +50,6 @@ class Cart:
 
         if str(card_id) in self.cart:
             self.cart[str(card_id)]["qty"] = qty
-            print("card_id")
         else:
             self.cart[str(card_id)] = {
                 "price": int(card.price),
@@ -59,21 +58,16 @@ class Cart:
             }
         self.save()
 
-    def update(self, product_id, action):
-        if product_id in self.cart:
-            product = self.cart[(product_id)]
+    def update(self, card_id, qty_value):
+        if card_id in self.cart:
+            card = self.cart[str(card_id)]
 
-            if action == "plus":
-                product["qty"] += 1
-            elif action == "minus":
-                product["qty"] -= 1
-                if product["qty"] < 0:
-                    self.delete(product_id)
+            card["qty"] = qty_value
             self.save()
 
-    def delete(self, product_id):
-        if product_id in self.cart:
-            del self.cart[product_id]
+    def delete(self, card_id):
+        if card_id in self.cart:
+            del self.cart[card_id]
             self.save()
 
     def clear(self):

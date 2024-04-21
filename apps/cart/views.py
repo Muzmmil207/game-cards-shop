@@ -2,6 +2,7 @@ import json
 
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 from apps.shop.models import Card, Game
@@ -33,13 +34,14 @@ def cart_add(request: HttpRequest):
     return response
 
 
+@csrf_exempt
 @require_http_methods(["POST"])
 def cart_update(request: HttpRequest):
     data = json.loads(request.body)
     cart = Cart(request)
-    product_id = data.get("productid")
-    action = data.get("action")
-    cart.update(product_id=product_id, action=action)
+    card_id = data.get("card_id")
+    qty_value = int(data.get("qty_value"))
+    cart.update(card_id=card_id, qty_value=qty_value)
 
     response = JsonResponse("cart updated", safe=False)
     return response
@@ -49,8 +51,22 @@ def cart_update(request: HttpRequest):
 def cart_delete(request: HttpRequest):
     data = json.loads(request.body)
     cart = Cart(request)
-    product_id = data.get("productid")
-    cart.delete(product_id=product_id)
+    card_id = data.get("card_id")
+    cart.delete(card_id=card_id)
 
     response = JsonResponse("cart updated", safe=False)
     return response
+
+
+def cart_delete(request: HttpRequest, card_id):
+    cart = Cart(request)
+    cart.delete(card_id=card_id)
+
+    # Get the referrer URL (previous page)
+    referer = request.META.get("HTTP_REFERER")
+
+    # Check if referrer is valid and return a success message otherwise
+    if not referer:
+        return redirect("shop")  # Redirect to product detail
+
+    return redirect(referer)  # Redirect back to the previous page

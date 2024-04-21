@@ -138,9 +138,9 @@
                         <h6><a href="{% url 'game-details' card.game.slug %}">{{card.game.name}}</a></h6>
                         <span>{{card.price|intcomma}}</span>
                       </div>
-                      <button class="close" title="Remove">
+                      <a href="{% url 'cart-delete' card.id %}" style="font-size: 1rem" class="close" title="Remove">
                         <i class="fa fa-close"></i>
-                      </button>
+                      </a>
                     </li>
                     {% endfor %}
                   </ul>
