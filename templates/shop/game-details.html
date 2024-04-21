@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load static %} {% load stars_filers %} {% block content %}{% load humanize %}
+{% extends 'base.html' %} {% load static %} {% load stars_filers %} {% block content %} {% load humanize %}
 <style>
   .active-card-btn {
     border-color: #e9c20d !important;
@@ -102,7 +102,7 @@
               </div>
             </div>
             <div class="single-add-to-cart">
-              <form class="cart-quantity" id="cart-form" method="post">
+              <form class="cart-quantity" id="cart-form" method="post" action="{% url 'cart-add' %}">
                 {% csrf_token %}
                 <div class="quantity">
                   <label>الكمية</label>

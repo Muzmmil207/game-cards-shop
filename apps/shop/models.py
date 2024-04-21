@@ -48,6 +48,14 @@ class Game(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def image_url(self):
+        try:
+            img_url = self.image.url
+        except:
+            img_url = "http://bootdey.com/img/Content/avatar/avatar1.png"
+        return img_url
+
 
 class Discount(models.Model):
     # discount_type = models.CharField(

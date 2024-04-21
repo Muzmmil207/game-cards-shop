@@ -58,8 +58,7 @@ def shop(request, category_slug=None):
 
 def game_details(request: HttpRequest, game_slug):
     """Renders a game detail page with related reviews and images."""
-    if request.method == 'POST':
-        print(request.POST)
+    # print(request.session.get("session_key"))
     try:
         game = Game.objects.filter(slug=game_slug).first()
     except:
