@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load static %} {% load cart_filers %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% load cart_filers %}{% load humanize %}{% block content %}
 <style>
   .cart-plus-minus-box {
     border: 1px solid #e1e1e1;
@@ -28,7 +28,7 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <form action="#">
+        <form>
           <div class="table-content table-responsive">
             <table class="table">
               <thead>
@@ -55,7 +55,7 @@
                   <td class="li-product-name">
                     <a href="{% url 'game-details' card.game.slug %}">{{card.game.name}}</a>
                   </td>
-                  <td class="li-product-price"><span class="amount">{{card.price}}</span></td>
+                  <td class="li-product-price"><span class="amount">{{card.price|intcomma}}</span></td>
                   <td class="quantity">
                     <label>Quantity</label>
                     <div class="cart--plus-minus">
@@ -68,7 +68,7 @@
                       <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div> -->
                     </div>
                   </td>
-                  <td class="product-subtotal"><span class="amount">{{card|total_price:cart}}</span></td>
+                  <td class="product-subtotal"><span class="amount">{{card|total_price:cart|intcomma}}</span></td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -91,11 +91,11 @@
                 <ul>
                   <li>
                     الإجمالي
-                    <span>ج.س. {{cart.get_cart_total}}</span>
+                    <span>ج.س. {{cart.get_cart_total|intcomma}}</span>
                   </li>
                   <li>
                     المجموع
-                    <span>ج.س. {{cart.get_cart_total}}</span>
+                    <span>ج.س. {{cart.get_cart_total|intcomma}}</span>
                   </li>
                 </ul>
                 <a href="{% url 'checkout' %}">التقدم لإتمام الطلب</a>

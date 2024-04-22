@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 
 from apps.cart.cart import Cart
+from apps.orders.models import Order, OrderItem
 from apps.orders.views import payment_confirmation
 
 
@@ -39,17 +40,29 @@ def checkout(request):
 
 
 def checkout(request):
+    cart = Cart(request)
 
-    # cart = Cart(request)
-    # total = str(cart.get_cart_total())
-    # total = total.replace('.', '')
-    # total = int(total)
+    if request.method == "POST":
+        order_key = request.POST["order_key"]
+        user = request.user
+        cart_total = cart.get_cart_total()
 
-    # stripe.api_key = settings.SECRET_KEY
-    # intent = stripe.PaymentIntent.create(
-    #     amount=total,
-    #     currency='usd',
-    #     metadata={'userid': request.user.id}
-    # )
+        # Check if order exists
+        # if  Order.objects.filter(order_key=order_key).exists():
+        #     pass
+        # else:
+        order = Order.objects.create(
+            user=user,
+            full_name=request.POST["first_name"] + " " + request.POST["last_name"],
+            email=request.POST["email"],
+            phone=request.POST["phone"],
+            total_paid=cart_total,
+            order_key=order_key,
+        )
+
+        for item in cart:
+            OrderItem.objects.create(
+                order=order, card=item["card"], price=item["price"], quantity=item["qty"]
+            )
 
     return render(request, "payment/checkout.html")

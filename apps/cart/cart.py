@@ -16,15 +16,15 @@ class Cart:
 
     def __iter__(self):
         """
-        Collect the product_id in the session data to query the database
-        and return products
+        Collect the cards_ids in the session data to query the database
+        and return cards
         """
-        product_ids = self.cart.keys()
-        products = Card.objects.filter(id__in=product_ids)
-        cart = self.cart.copy()
+        # cards_ids = self.cart.keys()
+        # cards = Card.objects.filter(id__in=cards_ids)
 
-        for product in products:
-            cart[str(product.id)]["product"] = product
+        cart = self.cart.copy()
+        for i in self.cart:
+            cart[i]["card"] = Card.objects.get(id=i)
 
         for item in cart.values():
             item["total_price"] = item["price"] * item["qty"]

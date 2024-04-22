@@ -1,12 +1,12 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% load cart_filers %}{% load humanize %}{% block content %}
 
 <!-- Begin Li's Breadcrumb Area -->
 <div class="breadcrumb-area">
   <div class="container">
     <div class="breadcrumb-content">
       <ul>
-        <li><a href="index.html">Home</a></li>
-        <li class="active">Checkout</li>
+        <li><a href="/">الصفحة ارئيسية</a></li>
+        <li class="active">الدفع</li>
       </ul>
     </div>
   </div>
@@ -15,337 +15,106 @@
 <!--Checkout Area Strat-->
 <div class="checkout-area pt-60 pb-30">
   <div class="container">
-    <div class="row">
-      <div class="col-12">
-        <div class="coupon-accordion">
-          <!--Accordion Start-->
-          <h3>
-            Returning customer?
-            <span id="showlogin">Click here to login</span>
-          </h3>
-          <div id="checkout-login" class="coupon-content">
-            <div class="coupon-info">
-              <p class="coupon-text">Quisque gravida turpis sit amet nulla posuere lacinia. Cras sed est sit amet ipsum luctus.</p>
-              <form action="#">
-                <p class="form-row-first">
-                  <label>
-                    Username or email
-                    <span class="required">*</span>
-                  </label>
-                  <input type="text" />
-                </p>
-                <p class="form-row-last">
-                  <label>
-                    Password
-                    <span class="required">*</span>
-                  </label>
-                  <input type="text" />
-                </p>
-                <p class="form-row">
-                  <input value="Login" type="submit" />
-                  <label>
-                    <input type="checkbox" />
-                    Remember me
-                  </label>
-                </p>
-                <p class="lost-password"><a href="#">Lost your password?</a></p>
-              </form>
-            </div>
-          </div>
-          <!--Accordion End-->
-          <!--Accordion Start-->
-          <h3>
-            Have a coupon?
-            <span id="showcoupon">Click here to enter your code</span>
-          </h3>
-          <div id="checkout_coupon" class="coupon-checkout-content">
-            <div class="coupon-info">
-              <form action="#">
-                <p class="checkout-coupon">
-                  <input placeholder="Coupon code" type="text" />
-                  <input value="Apply Coupon" type="submit" />
-                </p>
-              </form>
-            </div>
-          </div>
-          <!--Accordion End-->
-        </div>
-      </div>
-    </div>
+  
     <div class="row">
       <div class="col-lg-6 col-12">
-        <form action="#">
+        <form method="post">
+          {% csrf_token %}
           <div class="checkbox-form">
-            <h3>Billing Details</h3>
+            <h3 class="arabic-text">تفاصيل الفاتورة</h3>
             <div class="row">
-              <div class="col-md-12">
-                <div class="country-select clearfix">
-                  <label>
-                    Country
-                    <span class="required">*</span>
-                  </label>
-                  <select class="nice-select wide">
-                    <option data-display="Bangladesh">Bangladesh</option>
-                    <option value="uk">London</option>
-                    <option value="rou">Romania</option>
-                    <option value="fr">French</option>
-                    <option value="de">Germany</option>
-                    <option value="aus">Australia</option>
-                  </select>
-                </div>
-              </div>
               <div class="col-md-6">
                 <div class="checkout-form-list">
                   <label>
-                    First Name
+                    الاسم الاخير
                     <span class="required">*</span>
                   </label>
-                  <input placeholder="" type="text" />
+                  <input required placeholder=""  type="text" name="last_name"/>
                 </div>
               </div>
+
               <div class="col-md-6">
                 <div class="checkout-form-list">
                   <label>
-                    Last Name
+                    الاسم الأول
                     <span class="required">*</span>
                   </label>
-                  <input placeholder="" type="text" />
+                  <input required placeholder=""  type="text" name="first_name" />
                 </div>
               </div>
-              <div class="col-md-12">
-                <div class="checkout-form-list">
-                  <label>Company Name</label>
-                  <input placeholder="" type="text" />
-                </div>
-              </div>
+
               <div class="col-md-12">
                 <div class="checkout-form-list">
                   <label>
-                    Address
+                    البريد الإلكتروني
                     <span class="required">*</span>
                   </label>
-                  <input placeholder="Street address" type="text" />
+                  <input required placeholder="" value="{{request.user.email}}" type="email" name="email" />
                 </div>
               </div>
+
               <div class="col-md-12">
                 <div class="checkout-form-list">
-                  <input placeholder="Apartment, suite, unit etc. (optional)" type="text" />
+                  <label>
+                    الهاتف
+                    <span class="required">*</span>
+                  </label>
+                  <input required placeholder="" name="phone" type="tel" />
                 </div>
               </div>
               <div class="col-md-12">
                 <div class="checkout-form-list">
                   <label>
-                    Town / City
+                    رقم العملية
                     <span class="required">*</span>
                   </label>
-                  <input type="text" />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="checkout-form-list">
-                  <label>
-                    State / County
-                    <span class="required">*</span>
-                  </label>
-                  <input placeholder="" type="text" />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="checkout-form-list">
-                  <label>
-                    Postcode / Zip
-                    <span class="required">*</span>
-                  </label>
-                  <input placeholder="" type="text" />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="checkout-form-list">
-                  <label>
-                    Email Address
-                    <span class="required">*</span>
-                  </label>
-                  <input placeholder="" type="email" />
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="checkout-form-list">
-                  <label>
-                    Phone
-                    <span class="required">*</span>
-                  </label>
-                  <input type="text" />
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="checkout-form-list create-acc">
-                  <input id="cbox" type="checkbox" />
-                  <label>Create an account?</label>
-                </div>
-                <div id="cbox-info" class="checkout-form-list create-account">
-                  <p>Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
-                  <label>
-                    Account password
-                    <span class="required">*</span>
-                  </label>
-                  <input placeholder="password" type="password" />
+                  <input required name="order_key" placeholder="موجود في الاشعار رقم العملية زي  2000722095" type="text" />
                 </div>
               </div>
             </div>
-            <div class="different-address">
-              <div class="ship-different-title">
-                <h3>
-                  <label>Ship to a different address?</label>
-                  <input id="ship-box" type="checkbox" />
-                </h3>
-              </div>
-              <div id="ship-box-info" class="row">
-                <div class="col-md-12">
-                  <div class="country-select clearfix">
-                    <label>
-                      Country
-                      <span class="required">*</span>
-                    </label>
-                    <select class="nice-select wide">
-                      <option data-display="Bangladesh">Bangladesh</option>
-                      <option value="uk">London</option>
-                      <option value="rou">Romania</option>
-                      <option value="fr">French</option>
-                      <option value="de">Germany</option>
-                      <option value="aus">Australia</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="checkout-form-list">
-                    <label>
-                      First Name
-                      <span class="required">*</span>
-                    </label>
-                    <input placeholder="" type="text" />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="checkout-form-list">
-                    <label>
-                      Last Name
-                      <span class="required">*</span>
-                    </label>
-                    <input placeholder="" type="text" />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="checkout-form-list">
-                    <label>Company Name</label>
-                    <input placeholder="" type="text" />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="checkout-form-list">
-                    <label>
-                      Address
-                      <span class="required">*</span>
-                    </label>
-                    <input placeholder="Street address" type="text" />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="checkout-form-list">
-                    <input placeholder="Apartment, suite, unit etc. (optional)" type="text" />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="checkout-form-list">
-                    <label>
-                      Town / City
-                      <span class="required">*</span>
-                    </label>
-                    <input type="text" />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="checkout-form-list">
-                    <label>
-                      State / County
-                      <span class="required">*</span>
-                    </label>
-                    <input placeholder="" type="text" />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="checkout-form-list">
-                    <label>
-                      Postcode / Zip
-                      <span class="required">*</span>
-                    </label>
-                    <input placeholder="" type="text" />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="checkout-form-list">
-                    <label>
-                      Email Address
-                      <span class="required">*</span>
-                    </label>
-                    <input placeholder="" type="email" />
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="checkout-form-list">
-                    <label>
-                      Phone
-                      <span class="required">*</span>
-                    </label>
-                    <input type="text" />
-                  </div>
-                </div>
-              </div>
-              <div class="order-notes">
-                <div class="checkout-form-list">
-                  <label>Order Notes</label>
-                  <textarea id="checkout-mess" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
-                </div>
+          </div>
+          <div class="order-button-payment">
+            <div class="col-md-12" style="direction: rtl">
+              <div class="checkout-form-list" style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 0">
+                <input id="cbox" required type="checkbox" />
+                <label>لقد قرأتُ <a href="" style="background: transparent;border: medium none;color: black;font-size: 16px;font-weight: 500;height: 50px;margin: 20px 0 0;padding: 0;text-transform: uppercase;-webkit-transition: all 0.3s ease 0s;transition: all 0.3s ease 0s;width: 0;border: none;cursor: pointer;display: inline;">الشروط والأحكام</a> وأوافق عليها لهذا الموقع</label>
               </div>
             </div>
+            <input value="اكمال الطلب" type="submit" />
           </div>
         </form>
       </div>
       <div class="col-lg-6 col-12">
         <div class="your-order">
-          <h3>Your order</h3>
+          <h3 class="arabic-text">طلبك</h3>
           <div class="your-order-table table-responsive">
             <table class="table">
               <thead>
                 <tr>
-                  <th class="cart-product-name">Product</th>
-                  <th class="cart-product-total">Total</th>
+                  <th class="cart-product-name">المنتج</th>
+                  <th class="cart-product-total">المجموع</th>
                 </tr>
               </thead>
               <tbody>
+                {% for card in cart_cards %}
                 <tr class="cart_item">
                   <td class="cart-product-name">
-                    Vestibulum suscipit
-                    <strong class="product-quantity">× 1</strong>
+                    {{card.game.name}}
+                    <strong class="product-quantity">× {{card|get_quantity:cart}}</strong>
                   </td>
-                  <td class="cart-product-total"><span class="amount">£165.00</span></td>
+                  <td class="cart-product-total"><span class="amount">{{card|total_price:cart|intcomma}}</span></td>
                 </tr>
-                <tr class="cart_item">
-                  <td class="cart-product-name">
-                    Vestibulum suscipit
-                    <strong class="product-quantity">× 1</strong>
-                  </td>
-                  <td class="cart-product-total"><span class="amount">£165.00</span></td>
-                </tr>
+                {% endfor %}
               </tbody>
               <tfoot>
                 <tr class="cart-subtotal">
-                  <th>Cart Subtotal</th>
-                  <td><span class="amount">£215.00</span></td>
+                  <th>المجموع</th>
+                  <td><span class="amount">{{cart.get_cart_total|intcomma}}</span></td>
                 </tr>
                 <tr class="order-total">
-                  <th>Order Total</th>
+                  <th>الاجمالي</th>
                   <td>
-                    <strong><span class="amount">£215.00</span></strong>
+                    <strong><span class="amount">{{cart.get_cart_total|intcomma}}</span></strong>
                   </td>
                 </tr>
               </tfoot>
@@ -353,46 +122,46 @@
           </div>
           <div class="payment-method">
             <div class="payment-accordion">
-              <div id="accordion">
+              <div id="accordion" style="text-align: right">
                 <div class="card">
                   <div class="card-header" id="#payment-1">
                     <h5 class="panel-title">
-                      <a class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Direct Bank Transfer.</a>
+                      <a class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">تعليمات التحويل</a>
                     </h5>
                   </div>
                   <div id="collapseOne" class="collapse show" data-parent="#accordion">
                     <div class="card-body">
-                      <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                      <style>
+                        #collapseOne .card-body li {
+                          list-style: disc;
+                          direction: rtl;
+                          list-style-position: inside;
+                        }
+                      </style>
+                      <p>
+                        <ul>
+                        <li>اكتب رقم العملية في المربع التحت (حتلقا في اشعار التحويل نفسو)</li>
+                        <li>لو اشعارك حق يوم تاني ما ترفعو رسلة لي الدعم الفني</li>
+                        <li>ما تكرر الطلب اكتر من مره لو عند مشكلة ادخل صفحة اتصل بنا</li>
+                        </ul>
+                      </p>
                     </div>
                   </div>
                 </div>
                 <div class="card">
                   <div class="card-header" id="#payment-2">
                     <h5 class="panel-title">
-                      <a class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Cheque Payment</a>
+                      <a class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">بيانات الدفع</a>
                     </h5>
                   </div>
                   <div id="collapseTwo" class="collapse" data-parent="#accordion">
                     <div class="card-body">
-                      <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                      <p>رقم الحساب : 3000213</p>
+                      <p>باسم : شركة اليونكو للانشطة المتعددة المحدودة</p>
+                      <p>الفرع : اللفة</p>
                     </div>
                   </div>
                 </div>
-                <div class="card">
-                  <div class="card-header" id="#payment-3">
-                    <h5 class="panel-title">
-                      <a class="collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">PayPal</a>
-                    </h5>
-                  </div>
-                  <div id="collapseThree" class="collapse" data-parent="#accordion">
-                    <div class="card-body">
-                      <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="order-button-payment">
-                <input value="Place order" type="submit" />
               </div>
             </div>
           </div>
@@ -402,4 +171,5 @@
   </div>
 </div>
 <!--Checkout Area End-->
+
 {% endblock %}
