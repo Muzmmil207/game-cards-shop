@@ -1,0 +1,142 @@
+{% extends 'base.html' %} {% load static %} {% load cart_filers %}{% load humanize %}{% block content %}
+<div class="checkout-area pt-60 pb-30">
+  <div class="container">
+    <div class="jumbotron bg-success" style="text-align: center">
+      <span style="font-size: 24px; font-weight: 700; color: white; direction: rtl">شكرًا لك. تم استلام طلبك</span>
+    </div>
+
+    <table class="table table-striped" style="text-align: center">
+      <tbody>
+        <tr>
+          <td>
+            <p>التاريخ</p>
+            <span>{{order.created|date:"SHORT_DATE_FORMAT"}}</span>
+          </td>
+          <td>
+            <p>رقم الطلب</p>
+            <span>{{order.id}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>الإجمالي</p>
+            <span>{{order.total_paid|intcomma}}ج.س.</span>
+          </td>
+          <td>
+            <p>البريد الإلكتروني</p>
+            <span>{{order.email}}</span>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td colspan="2">
+            <p>وسيلة الدفع</p>
+            <span>بنكك</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin: 40px 0">
+      <p style="text-align: center">
+        <b>
+          <span style="font-size: x-small">
+            &nbsp;طلبك حينزل من
+            <span style="color: red">5 دقائق</span>
+            لحدي
+            <span style="color: red">&nbsp; 60 دقيقة</span>
+            غالبآ
+          </span>
+        </b>
+      </p>
+      <p style="text-align: center">
+        <b>
+          <span style="font-size: x-small">
+            &nbsp;في وقت العمل من
+            <span style="color: red">12:00 م</span>
+            لحدي&nbsp;
+            <span style="color: red">
+              12:00&nbsp;
+              <span>ص</span>
+            </span>
+            كل ايام الاسبوع&nbsp;
+          </span>
+        </b>
+      </p>
+      <p style="text-align: center">
+        <b>
+          <span style="font-size: x-small">
+            لو طلبك اتاخر اكتر من كده رسل لدعم الفنى
+            <span style="color: #2b00fe">رقم الطلب</span>
+            <a href="https://elyonkoshop.com/call/">اضغط هنا</a>
+          </span>
+        </b>
+      </p>
+    </div>
+
+    <div>
+      <div class="your-order">
+        <h3 class="arabic-text">تفاصيل الطلب</h3>
+        <div class="your-order-table table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="cart-product-name">المنتج</th>
+                <th class="cart-product-total">المجموع</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order_item in order.items.all %}
+              <tr class="cart_item">
+                <td class="cart-product-name">
+                  {{order_item.card.game.name}}
+                  <strong class="product-quantity">× {{order_item.quantity}}</strong>
+                </td>
+                <td class="cart-product-total">
+                  <span class="amount">{{order_item|order_item_total_price|intcomma}}</span>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+            <tfoot>
+              <tr class="cart-subtotal">
+                <th>المجموع</th>
+                <td><span class="amount">{{order.total_paid|intcomma}}ج.س.</span></td>
+              </tr>
+              <tr class="order-total">
+                <th>الاجمالي</th>
+                <td>
+                  <strong><span class="amount">{{order.total_paid|intcomma}}ج.س.</span></strong>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+    <p
+      style="
+        margin-top: 60px;
+        display: flex;
+        justify-content: space-between;
+        color: black;
+        font-weight: 500;
+        padding: 0 35px;
+      ">
+      <span>{{order.order_number}}</span>
+      <span>رقم العملية</span>
+    </p>
+    <hr />
+
+    <div class="jumbotron bg-white border" style="text-align: end; padding: 20px 8px">
+      <h2>عنوان الفاتورة</h2>
+
+      <address style="margin: 8px">
+        <p style="color: black">{{order.full_name}}</p>
+        <p style="color: black">{{order.phone}}</p>
+
+        <p style="color: black">{{order.email}}</p>
+      </address>
+    </div>
+  </div>
+</div>
+{% endblock %}

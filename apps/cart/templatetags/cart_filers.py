@@ -21,3 +21,8 @@ def total_price(card: Card, cart: Cart):
         return int(cart.cart.get(str(card.id))["qty"]) * card.price
     except KeyError:
         return card.price
+
+
+@register.filter
+def order_item_total_price(order_item):
+    return int(order_item.price) * order_item.quantity

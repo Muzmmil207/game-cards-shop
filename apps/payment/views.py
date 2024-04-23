@@ -4,7 +4,7 @@ import stripe
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 
@@ -66,4 +66,15 @@ def checkout(request: HttpRequest):
                     order=order, card=item["card"], price=item["price"], quantity=item["qty"]
                 )
 
+            cart.clear()
+            return redirect("checkout-processed", order.id)
     return render(request, "payment/checkout.html")
+
+
+@login_required
+def checkout_processed(request: HttpRequest, order_id):
+    order = Order.objects.get(id=order_id)
+    # order.order_number = (order.id + 27) * 3
+    # order.save()
+    context = {"order": order}
+    return render(request, "payment/checkout-processed.html", context)

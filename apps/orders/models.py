@@ -15,6 +15,7 @@ class Order(models.Model):
     total_paid = models.DecimalField(max_digits=8, decimal_places=0)
     order_key = models.CharField(max_length=200)
     payment_screenshot = models.ImageField(null=True, blank=True)
+    order_number = models.PositiveIntegerField(null=True, blank=True)
     is_closed = models.BooleanField(default=False)
 
     class Meta:
