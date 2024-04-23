@@ -1,11 +1,24 @@
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
+from apps.shop.models import Game
+
 from .forms import ContactForm
 
 
 def index(request: HttpRequest):
-    return render(request, "shop/index.html")
+    games_cards = Game.objects.filter(category__slug="games-cards")
+    games_charge = Game.objects.filter(category__slug="games-charge")
+    gift_cards = Game.objects.filter(category__slug="gift-cards")
+    account_charge = Game.objects.filter(category__slug="account-charge")
+
+    context = {
+        "games_cards": games_cards,
+        "games_charge": games_charge,
+        "gift_cards": gift_cards,
+        "account_charge": account_charge,
+    }
+    return render(request, "shop/index.html", context)
 
 
 def about_us(request):

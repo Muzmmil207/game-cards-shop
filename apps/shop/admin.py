@@ -9,6 +9,7 @@ admin.site.register(Card)
 
 class CardInline(admin.TabularInline):
     model = Card
+    extra = 1
 
 
 @admin.register(Game)
@@ -18,4 +19,5 @@ class GameAdmin(admin.ModelAdmin):
             obj.created_by = request.user
         obj.save()
 
+    readonly_fields = ("created_by",)
     inlines = [CardInline]
