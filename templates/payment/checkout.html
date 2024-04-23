@@ -15,10 +15,9 @@
 <!--Checkout Area Strat-->
 <div class="checkout-area pt-60 pb-30">
   <div class="container">
-  
     <div class="row">
       <div class="col-lg-6 col-12">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="checkbox-form">
             <h3 class="arabic-text">تفاصيل الفاتورة</h3>
@@ -29,7 +28,7 @@
                     الاسم الاخير
                     <span class="required">*</span>
                   </label>
-                  <input required placeholder=""  type="text" name="last_name"/>
+                  <input required placeholder="" type="text" name="last_name" />
                 </div>
               </div>
 
@@ -39,7 +38,7 @@
                     الاسم الأول
                     <span class="required">*</span>
                   </label>
-                  <input required placeholder=""  type="text" name="first_name" />
+                  <input required placeholder="" type="text" name="first_name" />
                 </div>
               </div>
 
@@ -62,13 +61,31 @@
                   <input required placeholder="" name="phone" type="tel" />
                 </div>
               </div>
+
               <div class="col-md-12">
                 <div class="checkout-form-list">
                   <label>
                     رقم العملية
                     <span class="required">*</span>
                   </label>
-                  <input required name="order_key" placeholder="موجود في الاشعار رقم العملية زي  2000722095" type="text" />
+                  <input
+                    required
+                    name="order_key"
+                    placeholder="موجود في الاشعار رقم العملية زي  2000722095"
+                    type="text" />
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <div class="checkout-form-list">
+                  <label>
+                    ارفع صورة الفاتورة او اشعار الدفع
+                    <span class="required">*</span>
+                  </label>
+                  <input
+                    required
+                    name="payment_screenshot"
+                    type="file" accept="image/*" />
                 </div>
               </div>
             </div>
@@ -77,7 +94,31 @@
             <div class="col-md-12" style="direction: rtl">
               <div class="checkout-form-list" style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 0">
                 <input id="cbox" required type="checkbox" />
-                <label>لقد قرأتُ <a href="" style="background: transparent;border: medium none;color: black;font-size: 16px;font-weight: 500;height: 50px;margin: 20px 0 0;padding: 0;text-transform: uppercase;-webkit-transition: all 0.3s ease 0s;transition: all 0.3s ease 0s;width: 0;border: none;cursor: pointer;display: inline;">الشروط والأحكام</a> وأوافق عليها لهذا الموقع</label>
+                <label>
+                  لقد قرأتُ
+                  <a
+                    href=""
+                    style="
+                      background: transparent;
+                      border: medium none;
+                      color: black;
+                      font-size: 16px;
+                      font-weight: 500;
+                      height: 50px;
+                      margin: 20px 0 0;
+                      padding: 0;
+                      text-transform: uppercase;
+                      -webkit-transition: all 0.3s ease 0s;
+                      transition: all 0.3s ease 0s;
+                      width: 0;
+                      border: none;
+                      cursor: pointer;
+                      display: inline;
+                    ">
+                    الشروط والأحكام
+                  </a>
+                  وأوافق عليها لهذا الموقع
+                </label>
               </div>
             </div>
             <input value="اكمال الطلب" type="submit" />
@@ -126,7 +167,14 @@
                 <div class="card">
                   <div class="card-header" id="#payment-1">
                     <h5 class="panel-title">
-                      <a class="" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">تعليمات التحويل</a>
+                      <a
+                        class=""
+                        data-toggle="collapse"
+                        data-target="#collapseOne"
+                        aria-expanded="true"
+                        aria-controls="collapseOne">
+                        تعليمات التحويل
+                      </a>
                     </h5>
                   </div>
                   <div id="collapseOne" class="collapse show" data-parent="#accordion">
@@ -151,7 +199,14 @@
                 <div class="card">
                   <div class="card-header" id="#payment-2">
                     <h5 class="panel-title">
-                      <a class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">بيانات الدفع</a>
+                      <a
+                        class="collapsed"
+                        data-toggle="collapse"
+                        data-target="#collapseTwo"
+                        aria-expanded="false"
+                        aria-controls="collapseTwo">
+                        بيانات الدفع
+                      </a>
                     </h5>
                   </div>
                   <div id="collapseTwo" class="collapse" data-parent="#accordion">

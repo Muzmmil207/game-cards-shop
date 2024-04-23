@@ -3,7 +3,7 @@ import json
 import stripe
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.http.response import HttpResponse
+from django.http import HttpRequest
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
@@ -13,7 +13,7 @@ from apps.orders.models import Order, OrderItem
 from apps.orders.views import payment_confirmation
 
 
-def order_placed(request):
+def order_placed(request: HttpRequest):
     cart = Cart(request)
     cart.clear()
     return render(request, "payment/orderplaced.html")
@@ -24,7 +24,7 @@ class Error(TemplateView):
 
 
 @login_required
-def checkout(request):
+def checkout(request: HttpRequest):
 
     cart = Cart(request)
     total = str(cart.get_cart_total())
@@ -39,7 +39,7 @@ def checkout(request):
     return render(request, "payment/checkout.html", {"client_secret": intent.client_secret})
 
 
-def checkout(request):
+def checkout(request: HttpRequest):
     cart = Cart(request)
 
     if request.method == "POST":
@@ -48,21 +48,22 @@ def checkout(request):
         cart_total = cart.get_cart_total()
 
         # Check if order exists
-        # if  Order.objects.filter(order_key=order_key).exists():
-        #     pass
-        # else:
-        order = Order.objects.create(
-            user=user,
-            full_name=request.POST["first_name"] + " " + request.POST["last_name"],
-            email=request.POST["email"],
-            phone=request.POST["phone"],
-            total_paid=cart_total,
-            order_key=order_key,
-        )
-
-        for item in cart:
-            OrderItem.objects.create(
-                order=order, card=item["card"], price=item["price"], quantity=item["qty"]
+        if Order.objects.filter(order_key=order_key).exists():
+            pass
+        else:
+            order = Order.objects.create(
+                user=user,
+                full_name=request.POST["first_name"] + " " + request.POST["last_name"],
+                email=request.POST["email"],
+                phone=request.POST["phone"],
+                total_paid=cart_total,
+                order_key=order_key,
+                payment_screenshot=request.FILES.get("payment_screenshot"),
             )
+
+            for item in cart:
+                OrderItem.objects.create(
+                    order=order, card=item["card"], price=item["price"], quantity=item["qty"]
+                )
 
     return render(request, "payment/checkout.html")
