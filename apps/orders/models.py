@@ -12,7 +12,7 @@ class Order(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
-    total_paid = models.DecimalField(max_digits=8, decimal_places=2)
+    total_paid = models.DecimalField(max_digits=8, decimal_places=0)
     order_key = models.CharField(max_length=200)
     is_closed = models.BooleanField(default=False)
 
