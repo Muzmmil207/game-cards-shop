@@ -81,7 +81,7 @@ class Discount(models.Model):
 class Card(models.Model):
     name = models.CharField(max_length=255)
     card_code = models.CharField(max_length=255)
-    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name="game_cards")
     price = models.DecimalField(max_digits=7, decimal_places=0)
     discount = models.ForeignKey(Discount, on_delete=models.CASCADE, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -92,7 +92,7 @@ class Card(models.Model):
 
     class Meta:
         verbose_name_plural = "Cards"
-        ordering = ["-created"]
+        ordering = ["price"]
 
     def __str__(self):
         return f"{self.name} ({self.game.name})"
