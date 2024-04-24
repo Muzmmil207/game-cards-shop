@@ -1,5 +1,6 @@
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 
 from apps.shop.models import Game
@@ -9,27 +10,29 @@ from .models import Wishlist
 
 
 @login_required
-def wishlist(request):
-    return render(request, "account/user/wishlist.html")
+def wishlist(request: HttpRequest):
+    wishlists = Wishlist.objects.filter(user=request.user)
+    context = {"wishlists": wishlists}
+    return render(request, "account/user/wishlist.html", context)
 
 
 @login_required
-def wallet(request):
+def wallet(request: HttpRequest):
     return render(request, "account/user/wallet.html")
 
 
 @login_required
-def account_charge_checkout(request):
+def account_charge_checkout(request: HttpRequest):
     return render(request, "account/user/account-charge-checkout.html")
 
 
 @login_required
-def account_orders(request):
+def account_orders(request: HttpRequest):
     return render(request, "account/user/orders.html")
 
 
 @login_required
-def edit_account(request):
+def edit_account(request: HttpRequest):
     form = UserEditForm(instance=request.user)
 
     if request.method == "POST":
@@ -42,7 +45,7 @@ def edit_account(request):
 
 
 @login_required
-def delete_user(request):
+def delete_user(request: HttpRequest):
     user = request.user
     user.is_active = False
     user.save()

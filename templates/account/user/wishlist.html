@@ -26,47 +26,34 @@
                   <th class="li-product-thumbnail">images</th>
                   <th class="cart-product-name">Product</th>
                   <th class="li-product-price">Unit Price</th>
-                  <th class="li-product-stock-status">Stock Status</th>
+                  <!-- <th class="li-product-stock-status">Stock Status</th> -->
                   <th class="li-product-add-cart">add to cart</th>
                 </tr>
               </thead>
               <tbody>
+                {% for wishlist in wishlists %}
                 <tr>
                   <td class="li-product-remove">
                     <a href="#"><i class="fa fa-times"></i></a>
                   </td>
                   <td class="li-product-thumbnail">
-                    <a href="#"><img src="images/wishlist-thumb/1.jpg" alt="" /></a>
+                    <a href="{% url 'game-details' wishlist.game.slug %}">
+                      <img
+                        src="{{wishlist.game.image_url}}"
+                        alt="{{wishlist.game.name}}"
+                        style="height: 90px; width: 90px; object-fit: contain" />
+                    </a>
                   </td>
-                  <td class="li-product-name"><a href="#">Giro Civilia</a></td>
-                  <td class="li-product-price"><span class="amount">$23.39</span></td>
-                  <td class="li-product-stock-status"><span class="in-stock">in stock</span></td>
+                  <td class="li-product-name">
+                    <a href="{% url 'game-details' wishlist.game.slug %}">{{wishlist.game.name}}</a>
+                  </td>
+                  <td class="li-product-price">
+                    <span class="amount">{{wishlist.game.game_cards.all.0.price}}ج.س</span>
+                  </td>
+                  <!-- <td class="li-product-stock-status"><span class="in-stock">in stock</span></td> -->
                   <td class="li-product-add-cart"><a href="#">add to cart</a></td>
                 </tr>
-                <tr>
-                  <td class="li-product-remove">
-                    <a href="#"><i class="fa fa-times"></i></a>
-                  </td>
-                  <td class="li-product-thumbnail">
-                    <a href="#"><img src="images/wishlist-thumb/2.jpg" alt="" /></a>
-                  </td>
-                  <td class="li-product-name"><a href="#">Pro Bike Shoes</a></td>
-                  <td class="li-product-price"><span class="amount">$30.50</span></td>
-                  <td class="li-product-stock-status"><span class="in-stock">in stock</span></td>
-                  <td class="li-product-add-cart"><a href="#">add to cart</a></td>
-                </tr>
-                <tr>
-                  <td class="li-product-remove">
-                    <a href="#"><i class="fa fa-times"></i></a>
-                  </td>
-                  <td class="li-product-thumbnail">
-                    <a href="#"><img src="images/wishlist-thumb/3.jpg" alt="" /></a>
-                  </td>
-                  <td class="li-product-name"><a href="#">Nero Urban Shoes</a></td>
-                  <td class="li-product-price"><span class="amount">$40.19</span></td>
-                  <td class="li-product-stock-status"><span class="out-stock">out stock</span></td>
-                  <td class="li-product-add-cart"><a href="#">add to cart</a></td>
-                </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>

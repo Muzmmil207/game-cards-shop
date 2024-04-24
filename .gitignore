@@ -36,22 +36,4 @@ env/
 .env
 
 ignore
-
-sql
-sitedata
-CACHE
-pickthebrain.sqlite3
-
-
-
-cosmix
-complex
-energy
-html-freebie-triple-p-master
-Initio
-moon
-roxy
-spourmo
-templatemo_554_ocean_vibes
-unika-html
-univers
+media
