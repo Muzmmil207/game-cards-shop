@@ -2,6 +2,7 @@ from .base import *
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
+MIDDLEWARE.insert(8, "allauth.account.middleware.AccountMiddleware")
 
 # if not DEBUG:
 #     ADMINS = [
