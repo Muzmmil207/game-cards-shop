@@ -210,9 +210,13 @@
                 <li class="catmenu-dropdown megamenu-static-holder">
                   <a href="{% url 'edit-account' %}">حسابي</a>
                   <ul class="megamenu hb-megamenu">
+                    {% if request.user.is_authenticated %}
                     <li><a href="{% url 'account-orders' %}">الطلبات</a></li>
                     <li><a href="{% url 'edit-account' %}">تفاصيل الحساب</a></li>
                     <li><a href="{% url 'wallet' %}">محفظتي</a></li>
+                    {% else %}
+                    <li><a href="{% url 'account_login' %}">تسجيل الدخول</a></li>
+                    {% endif %}
                   </ul>
                 </li>
                 <li></li>

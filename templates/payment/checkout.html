@@ -15,6 +15,22 @@
 <!--Checkout Area Strat-->
 <div class="checkout-area pt-60 pb-30">
   <div class="container">
+    {% if not request.user.is_authenticated %}
+    <div class="row">
+      <div class="col-12">
+        <div class="coupon-accordion">
+          <!--Accordion Start-->
+          <!--Accordion Start-->
+          <h3>
+            انت بحاجة إلي تسجيل الدخول
+            <span><a href="{% url 'account_login' %}">من هنا</a></span>
+          </h3>
+
+          <!--Accordion End-->
+        </div>
+      </div>
+    </div>
+    {% endif %}
     <div class="row">
       <div class="col-lg-6 col-12">
         <form method="post" enctype="multipart/form-data">
@@ -82,16 +98,14 @@
                     ارفع صورة الفاتورة او اشعار الدفع
                     <span class="required">*</span>
                   </label>
-                  <input
-                    required
-                    name="payment_screenshot"
-                    type="file" accept="image/*" />
+                  <input required name="payment_screenshot" type="file" accept="image/*" />
                 </div>
               </div>
               {% endif %}
             </div>
           </div>
-          <div class="order-button-payment">
+            {% if request.user.is_authenticated %}
+            <div class="order-button-payment">
             <div class="col-md-12" style="direction: rtl">
               <div class="checkout-form-list" style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 0">
                 <input id="cbox" required type="checkbox" />
@@ -124,6 +138,7 @@
             </div>
             <input value="اكمال الطلب" type="submit" />
           </div>
+          {% endif %}
         </form>
       </div>
       <div class="col-lg-6 col-12">

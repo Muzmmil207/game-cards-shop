@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-media/**/
+mediaa/**/
 
 
 # Unit test / coverage reports
@@ -23,7 +23,6 @@ cover/
 
 # Django stuff:
 *.log
-db.sqlite3
 db.sqlite3-journal
 
 celerybeat.pid
@@ -36,4 +35,3 @@ env/
 .env
 
 ignore
-media
