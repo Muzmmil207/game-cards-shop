@@ -5,12 +5,12 @@
   <div class="container">
     <div class="breadcrumb-content">
       <ul>
-        <li><a href="/">Home</a></li>
+        <li><a href="/">الصفحة الرئيسية</a></li>
         {% if current_category %}
-        <li><a href="{% url 'product-list' %}">Games List</a></li>
+        <li><a href="{% url 'shop' %}">المتجر</a></li>
         <li class="active">{{current_category}}</li>
         {% else %}
-        <li class="active">Games List</li>
+        <li class="active">المتجر</li>
         {% endif %}
       </ul>
     </div>
@@ -55,21 +55,21 @@
               <!-- shop-item-filter-list end -->
             </div>
             <div class="toolbar-amount">
-              <span>Showing {{games.start_index}} to {{games.end_index}} of {{games_length}} item(s)</span>
+              <span>عرض {{games.start_index}} إلي {{games.end_index}} من اصل {{games_length}} عنصر</span>
             </div>
           </div>
           <!-- product-select-box start -->
           <div class="product-select-box">
             <div class="product-short">
-              <p>Sort By:</p>
+              <p>:فرز بواسطة</p>
               <form id="sortByForm" action="{{request.get_full_path}}" method="get">
                 <select class="nice-selects" name="sort_by" id="sortBySelect">
-                  <option value="trending" selected="selected">Relevance</option>
-                  <option value="name_asc">Name (A - Z)</option>
-                  <option value="name_desc">Name (Z - A)</option>
-                  <option value="price_low_to_high">Price (Low &gt; High)</option>
-                  <option value="price_high_to_low">Price (High &gt; Low)</option>
-                  <option value="rating_high_to_low">Rating (Lowest)</option>
+                  <option value="trending" selected="selected">الاكثر علاقة</option>
+                  <option value="name_asc">الإسم (A - Z)</option>
+                  <option value="name_desc">الإسم (Z - A)</option>
+                  <option value="price_low_to_high">السعر (Low &gt; High)</option>
+                  <option value="price_high_to_low">السعر (High &gt; Low)</option>
+                  <option value="rating_high_to_low">التقييم (Lowest)</option>
                 </select>
               </form>
               <script>
@@ -101,7 +101,6 @@
                         <a href="{% url 'game-details' game.slug %}">
                           <img src="{{game.image.url}}" alt="{{game.name}}" />
                         </a>
-                        <span class="sticker">New</span>
                       </div>
                       <div class="product_desc">
                         <div class="product_desc_info">
@@ -128,19 +127,18 @@
                         </div>
                         <div class="add-actions">
                           <ul class="add-actions-link">
-                            <li class="add-cart active"><a href="shopping-cart.html">Add to cart</a></li>
+                            <li class="add-cart active">
+                              <a href="{% url 'game-details' game.slug %}">اضف إلي العربة</a>
+                            </li>
                             <li>
-                              <a
-                                href="#"
-                                title="quick view"
-                                class="quick-view-btn"
-                                data-toggle="modal"
-                                data-target="#exampleModalCenter">
-                                <i class="fa fa-eye"></i>
+                              <a class="links-details" href="{% url 'manage-wishlist' game.id %}">
+                                <i class="fa fa-heart-o"></i>
                               </a>
                             </li>
                             <li>
-                              <a class="links-details" href="wishlist.html"><i class="fa fa-heart-o"></i></a>
+                              <a href="{% url 'game-details' game.slug %}" title="quick view" class="quick-view-btn">
+                                <i class="fa fa-eye"></i>
+                              </a>
                             </li>
                           </ul>
                         </div>
@@ -159,19 +157,20 @@
                   <div class="row product-layout-list">
                     <div class="col-lg-3 col-md-5">
                       <div class="product-image">
-                        <a href="single-product.html">
-                          <img src="images/product/large-size/12.jpg" alt="{{game.name}}" />
+                        <a href="{% url 'game-details' game.slug %}">
+                          <img src="{{game.image.url}}" alt="{{game.name}}" />
                         </a>
-                        <span class="sticker">New</span>
                       </div>
                     </div>
                     <div class="col-lg-5 col-md-7">
                       <div class="product_desc">
                         <div class="product_desc_info">
                           <div class="product-review">
+                            {% if game.category %}
                             <h5 class="manufacturer">
-                              <a href="product-details.html">Graphic Corner</a>
+                              <a href="{% url 'category-shop' game.category.slug %}">{{game.category.name}}</a>
                             </h5>
+                            {% endif %}
                             <div class="rating-box">
                               <ul class="rating">
                                 <li><i class="fa fa-star-o"></i></li>
@@ -182,32 +181,28 @@
                               </ul>
                             </div>
                           </div>
-                          <h4><a class="product_name" href="single-product.html">Hummingbird printed t-shirt</a></h4>
+                          <h4><a class="product_name" href="{% url 'game-details' game.slug %}">{{game.name}}</a></h4>
                           <div class="price-box">
-                            <span class="new-price">$46.80</span>
+                            <span class="new-price">ج.س{{game.game_cards.all.0.price}}</span>
                           </div>
-                          <p>
-                            Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360 R3 Wi-Fi Bluetooth
-                            Speakers. Fill The Entire Room With Exquisite Sound via Ring Radiator Technology. Stream And
-                            Control R3 Speakers Wirelessly With Your Smartphone. Sophisticated, Modern Desig
-                          </p>
+                          <p>{{game.description}}</p>
                         </div>
                       </div>
                     </div>
                     <div class="col-lg-4">
-                      <div class="shop-add-action mb-xs-30">
+                      <div class="shop-add-action">
                         <ul class="add-actions-link">
-                          <li class="add-cart"><a href="#">Add to cart</a></li>
+                          <li class="add-cart"><a href="{% url 'game-details' game.slug %}">اضف إلي العربة</a></li>
                           <li class="wishlist">
-                            <a href="wishlist.html">
+                            <a href="{% url 'manage-wishlist' game.id %}">
                               <i class="fa fa-heart-o"></i>
-                              Add to wishlist
+                              إضافة الي قائمة الامنيات
                             </a>
                           </li>
                           <li>
-                            <a class="quick-view" data-toggle="modal" data-target="#exampleModalCenter" href="#">
+                            <a href="{% url 'game-details' game.slug %}" title="quick view" class="quick-view-btn">
                               <i class="fa fa-eye"></i>
-                              Quick view
+                              عرض
                             </a>
                           </li>
                         </ul>
@@ -221,7 +216,7 @@
             <div class="paginatoin-area">
               <div class="row">
                 <div class="col-lg-6 col-md-6">
-                  <p>Showing {{games.start_index}}-{{games.end_index}} of {{games_length}} item(s)</p>
+                  <p>عرض {{games.start_index}} إلي {{games.end_index}} من اصل {{games_length}} عنصر</p>
                 </div>
                 <div class="col-lg-6 col-md-6">
                   <ul class="pagination-box">
@@ -229,7 +224,7 @@
                     <li>
                       <a href="?{{clean_paginate}}&page={{games.previous_page_number}}" class="Previous">
                         <i class="fa fa-chevron-left"></i>
-                        Previous
+                        السابق
                       </a>
                     </li>
                     {% endif %} {% for i in games.paginator.page_range %} {% if games.number == i %}
@@ -239,7 +234,7 @@
                     {% endif %} {% endfor %} {% if games.has_next %}
                     <li>
                       <a href="?{{clean_paginate}}&page={{games.next_page_number}}" class="Next">
-                        Next
+                        التالي
                         <i class="fa fa-chevron-right"></i>
                       </a>
                     </li>

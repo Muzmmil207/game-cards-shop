@@ -78,6 +78,8 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 # Custom
                 "apps.cart.context_processors.cart",
+                "apps.accounts.context_processors.account_context",
+                "apps.shop.context_processors.game_categories",
             ],
         },
     },

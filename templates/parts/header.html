@@ -1,4 +1,9 @@
 {% load static %} {% load humanize %}
+<style>
+  .no-after::after {
+    content: "" !important;
+  }
+</style>
 <header>
   {% comment %}
   <!-- Begin Header Top Area -->
@@ -92,16 +97,14 @@
         <!-- Begin Header Middle Right Area -->
         <div class="col-lg-9 pl-0 ml-sm-15 ml-xs-15">
           <!-- Begin Header Middle Searchbox Area -->
-          <form action="#" class="hm-searchbox">
-            <select class="nice-select select-search-category">
-              <option value="0">All</option>
-              <option value="10">Laptops</option>
-              <option value="13">Cameras</option>
-              <option value="14">headphone</option>
-              <option value="15">Smartwatch</option>
-              <option value="16">Accessories</option>
+          <form action="{% url 'shop' %}" class="hm-searchbox">
+            <select class="nice-select select-search-category" name="category">
+              <option value="0">الكل</option>
+              {% for category in categories %}
+              <option value="{{category.slug}}">{{category.name}}</option>
+              {% endfor %}
             </select>
-            <input type="text" placeholder="Enter your search key ..." />
+            <input type="text" name="q" placeholder="بحث ..." />
             <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
           </form>
           <!-- Header Middle Searchbox Area End Here -->
@@ -111,7 +114,7 @@
               <!-- Begin Header Middle Wishlist Area -->
               <li class="hm-wishlist">
                 <a href="{% url 'wishlist' %}">
-                  <span class="cart-item-count wishlist-item-count">0</span>
+                  <span class="cart-item-count wishlist-item-count">{{wishlist_count}}</span>
                   <i class="fa fa-heart-o"></i>
                 </a>
               </li>
@@ -178,24 +181,20 @@
             <nav>
               <ul>
                 <li class="dropdown-holder">
-                  <a href="/">الصفحة الرىيسية</a>
+                  <a href="/" class="no-after">الصفحة الرئيسية</a>
                 </li>
                 <li class="catmenu-dropdown megamenu-holder">
                   <a href="{% url 'shop' %}">المتجر</a>
                   <ul class="megamenu hb-megamenu">
                     <li>
-                      <a href="shop-left-sidebar.html">Shop Page Layout</a>
+                      <a href="#">التصنيفات</a>
                       <ul>
-                        <li><a href="shop-3-column.html">Shop 3 Column</a></li>
-                        <li><a href="shop-4-column.html">Shop 4 Column</a></li>
-                        <li><a href="shop-left-sidebar.html">Shop Left Sidebar</a></li>
-                        <li><a href="shop-right-sidebar.html">Shop Right Sidebar</a></li>
-                        <li><a href="shop-list.html">Shop List</a></li>
-                        <li><a href="shop-list-left-sidebar.html">Shop List Left Sidebar</a></li>
-                        <li><a href="shop-list-right-sidebar.html">Shop List Right Sidebar</a></li>
+                        {% for category in categories %}
+                        <li><a href="{% url 'category-shop' category.slug %}">{{category.name}}</a></li>
+                        {% endfor %}
                       </ul>
                     </li>
-                    <li>
+                    <!-- <li>
                       <a href="single-product-gallery-left.html">Single Product Style</a>
                       <ul>
                         <li><a href="single-product-carousel.html">Single Product Carousel</a></li>
@@ -205,17 +204,7 @@
                         <li><a href="single-product-tab-style-left.html">Single Product Tab Style Left</a></li>
                         <li><a href="single-product-tab-style-right.html">Single Product Tab Style Right</a></li>
                       </ul>
-                    </li>
-                    <li>
-                      <a href="single-product.html">Single Products</a>
-                      <ul>
-                        <li><a href="single-product.html">Single Product</a></li>
-                        <li><a href="single-product-sale.html">Single Product Sale</a></li>
-                        <li><a href="single-product-group.html">Single Product Group</a></li>
-                        <li><a href="single-product-normal.html">Single Product Normal</a></li>
-                        <li><a href="single-product-affiliate.html">Single Product Affiliate</a></li>
-                      </ul>
-                    </li>
+                    </li> -->
                   </ul>
                 </li>
                 <li class="catmenu-dropdown megamenu-static-holder">
