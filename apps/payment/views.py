@@ -1,6 +1,3 @@
-import json
-
-import stripe
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
@@ -22,22 +19,6 @@ def order_placed(request: HttpRequest):
 
 class Error(TemplateView):
     template_name = "payment/error.html"
-
-
-@login_required
-def checkout(request: HttpRequest):
-
-    cart = Cart(request)
-    total = str(cart.get_cart_total())
-    total = total.replace(".", "")
-    total = int(total)
-
-    stripe.api_key = settings.SECRET_KEY
-    intent = stripe.PaymentIntent.create(
-        amount=total, currency="usd", metadata={"userid": request.user.id}
-    )
-
-    return render(request, "payment/checkout.html", {"client_secret": intent.client_secret})
 
 
 def checkout(request: HttpRequest):
