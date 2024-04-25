@@ -87,7 +87,8 @@ class Card(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
 
-    objects = models.Manager()
+    # objects = models.Manager()
+    objects = CardManager()
     active = CardManager()
 
     class Meta:

@@ -1,0 +1,81 @@
+{% extends 'base.html' %} {% load static %} {% load humanize %} {% block content %}
+<style>
+  .table-container {
+    overflow-x: scroll;
+  }
+  tr {
+    direction: rtl;
+  }
+</style>
+
+<div class="checkout-area pt-60 pb-30">
+  <div class="container table-container">
+    <div class="your-order">
+      <p class="arabic-text" style="font-size: 25px; color: black; font-weight: 500">تفاصيل الطلب</p>
+    </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">رقم العملية</th>
+          <th scope="col">تاريخ العملية</th>
+          <th scope="col">وسيلة الدفع</th>
+          <th scope="col">الإجمالي</th>
+          <th scope="col">إسم العميل</th>
+          <th scope="col">البريد</th>
+          <th scope="col">رقم الهاتف</th>
+          <th scope="col">الحالة</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">{{order.order_number}}</th>
+          <td>{{order.created|date:"SHORT_DATE_FORMAT"}}</td>
+          <td>{{order.get_payment_method_display}}</td>
+          <td>{{order.total_paid|intcomma}}</td>
+          <td>{{order.full_name}}</td>
+          <td>{{order.email}}</td>
+          <td>{{order.phone}}</td>
+          {% if order.is_closed %}
+          <td>مكتملة</td>
+          {% else %}
+          <td>قيد الإنتظار</td>
+          {% endif %}
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="checkout-area pt-60 pb-30">
+  <div class="container table-container">
+    <div class="your-order">
+      <p class="arabic-text" style="font-size: 25px; color: black; font-weight: 500">العناصر التي تم شرائها</p>
+    </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">الإسم</th>
+          <th scope="col">السعر</th>
+          <th scope="col">الكمية</th>
+          <th scope="col">رمز البطاقة (Code)</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in order.items.all %}
+        <tr>
+          <th scope="row">{{item.card.game.name}} ({{item.card.name}})</th>
+          <td>{{item.price}}</td>
+          <td>{{item.quantity}}</td>
+          {% if order.is_closed %}
+          <td>{{item.code}}</td>
+          {% else %}
+          <td>قيد الإنتظار</td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 
+from apps.orders.models import Order, OrderItem
 from apps.shop.models import Game
 
 from .forms import UserEditForm
@@ -28,7 +29,10 @@ def account_charge_checkout(request: HttpRequest):
 
 @login_required
 def account_orders(request: HttpRequest):
-    return render(request, "account/user/account-orders.html")
+    user = request.user
+    orders = Order.objects.filter(user=user)
+    context = {"orders": orders}
+    return render(request, "account/user/account-orders.html", context)
 
 
 @login_required

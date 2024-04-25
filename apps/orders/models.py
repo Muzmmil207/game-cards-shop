@@ -48,6 +48,7 @@ class OrderItem(models.Model):
     )
     price = models.DecimalField(max_digits=7, decimal_places=0)
     quantity = models.PositiveIntegerField(default=1)
+    code = models.CharField(max_length=100, default="غير متوفر بعد")
 
     def __str__(self):
         return f"{self.card.game.name} {(self.card.name)}"
