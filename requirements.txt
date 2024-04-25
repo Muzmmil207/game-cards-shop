@@ -1,5 +1,7 @@
 dj-database-url
 Django
+djangorestframework
+django-allauth
 gunicorn
 psycopg2
 Pillow
