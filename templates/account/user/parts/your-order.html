@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %} {% load humanize %}
 <div class="your-order">
   <h3 class="arabic-text">حسابك</h3>
   <div class="payment-method">
@@ -7,7 +7,7 @@
         <div class="card">
           <div class="order-button-payment">
             <a href="{% url 'wallet' %}">
-              <span>ج.س {{request.user.wallet.balance}}</span>
+              <span>ج.س {{request.user.wallet.balance|intcomma}}</span>
               <img
                 alt="account_balance_wallet"
                 class="w-5 mr-1"

@@ -7,14 +7,24 @@ User = get_user_model()
 
 
 class Order(models.Model):
+    PAYMENT_CHOICES = (
+        ("bankak", "بنكك"),
+        ("wallet", "محفظة الحساب"),
+    )
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name="user_order")
     full_name = models.CharField(max_length=50)
     email = models.EmailField()
     phone = models.CharField(max_length=100)
     created = models.DateTimeField(auto_now_add=True)
     total_paid = models.DecimalField(max_digits=8, decimal_places=0)
-    order_key = models.CharField(max_length=200)
+    order_key = models.CharField(max_length=200, null=True, blank=True)
     payment_screenshot = models.ImageField(null=True, blank=True)
+    payment_method = models.CharField(
+        max_length=20,
+        choices=PAYMENT_CHOICES,
+        blank=True,
+        default="bankak",
+    )
     order_number = models.PositiveIntegerField(null=True, blank=True)
     is_closed = models.BooleanField(default=False)
 

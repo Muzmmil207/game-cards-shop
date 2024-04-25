@@ -23,5 +23,6 @@ class OrderAdmin(admin.ModelAdmin):
         "order_key",
         "payment_screenshot",
         "order_number",
+        "payment_method",
     )
     inlines = [OrderItemInline]

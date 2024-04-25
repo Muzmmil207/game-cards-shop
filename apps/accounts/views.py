@@ -28,7 +28,7 @@ def account_charge_checkout(request: HttpRequest):
 
 @login_required
 def account_orders(request: HttpRequest):
-    return render(request, "account/user/orders.html")
+    return render(request, "account/user/account-orders.html")
 
 
 @login_required

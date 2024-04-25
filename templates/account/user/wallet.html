@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% load humanize %} {% block content %}
 <style>
   .account-balance {
     display: flex;
@@ -24,7 +24,7 @@
           <div class="account-balance">
             <span class="balance">
               ج.س
-              <span>{{request.user.wallet.balance}}</span>
+              <span>{{request.user.wallet.balance|intcomma}}</span>
             </span>
             <span class="balance-text">رصيدك</span>
           </div>

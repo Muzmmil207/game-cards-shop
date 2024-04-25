@@ -61,7 +61,7 @@
                   <input required placeholder="" name="phone" type="tel" />
                 </div>
               </div>
-
+              {% if not has_enough_balance %}
               <div class="col-md-12">
                 <div class="checkout-form-list">
                   <label>
@@ -88,6 +88,7 @@
                     type="file" accept="image/*" />
                 </div>
               </div>
+              {% endif %}
             </div>
           </div>
           <div class="order-button-payment">

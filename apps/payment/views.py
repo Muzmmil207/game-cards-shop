@@ -8,6 +8,7 @@ from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 
+from apps.accounts.models import Wallet
 from apps.cart.cart import Cart
 from apps.orders.models import Order, OrderItem
 from apps.orders.views import payment_confirmation
@@ -40,35 +41,53 @@ def checkout(request: HttpRequest):
 
 
 def checkout(request: HttpRequest):
+    context = {}
     cart = Cart(request)
+    user = request.user
+    has_enough_balance = False
+    if user.is_authenticated:
+        wallet = Wallet.objects.get(user=user)
+        has_enough_balance = wallet.balance >= cart.get_cart_total()
+        wallet.balance -= cart.get_cart_total()
+    context["has_enough_balance"] = has_enough_balance
 
     if request.method == "POST":
-        order_key = request.POST["order_key"]
         user = request.user
         cart_total = cart.get_cart_total()
 
-        # Check if order exists
-        if Order.objects.filter(order_key=order_key).exists():
-            pass
-        else:
+        if request.FILES.get("payment_screenshot"):
             order = Order.objects.create(
                 user=user,
                 full_name=request.POST["first_name"] + " " + request.POST["last_name"],
                 email=request.POST["email"],
                 phone=request.POST["phone"],
                 total_paid=cart_total,
-                order_key=order_key,
+                order_key=request.POST["order_key"],
                 payment_screenshot=request.FILES.get("payment_screenshot"),
             )
-
-            for item in cart:
-                OrderItem.objects.create(
-                    order=order, card=item["card"], price=item["price"], quantity=item["qty"]
+        elif not request.FILES.get("payment_screenshot") and has_enough_balance:
+            wallet.balance -= cart_total
+            if wallet.balance >= 0:
+                order = Order.objects.create(
+                    user=user,
+                    full_name=request.POST["first_name"] + " " + request.POST["last_name"],
+                    email=request.POST["email"],
+                    phone=request.POST["phone"],
+                    total_paid=cart_total,
+                    payment_method="wallet",
                 )
+                wallet.save()
+        else:
+            return redirect("checkout")
 
-            cart.clear()
-            return redirect("checkout-processed", order.id)
-    return render(request, "payment/checkout.html")
+        for item in cart:
+            OrderItem.objects.create(
+                order=order, card=item["card"], price=item["price"], quantity=item["qty"]
+            )
+
+        cart.clear()
+        return redirect("checkout-processed", order.id)
+    return render(request, "payment/checkout.html", context)
 
 
 @login_required
