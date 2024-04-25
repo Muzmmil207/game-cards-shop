@@ -1,4 +1,7 @@
-# from .base import *
+from .base import *
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 
 # if not DEBUG:
 #     ADMINS = [
