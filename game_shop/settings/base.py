@@ -110,15 +110,6 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_LOGOUT_ON_PASSWORD_CHANGE = True
 ACCOUNT_LOGOUT_REDIRECT_URL = LOGIN_URL
 
-SOCIALACCOUNT_PROVIDERS = {
-    "google": {
-        "APP": {
-            "client_id": "801117901520-7s8o0ufsjvs92ugpqj1ob638gmpqva7t.apps.googleusercontent.com",
-            "secret": "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",
-            "key": "",
-        }
-    }
-}
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
